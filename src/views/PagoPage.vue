@@ -9,7 +9,7 @@
                 <ion-buttons slot="end">
                     <ion-menu-button color="light"></ion-menu-button>
                 </ion-buttons>
-                <ion-title>Comidas</ion-title>
+                <ion-title>Método de pago</ion-title>
             </ion-toolbar>
         </ion-header>
 
@@ -17,9 +17,88 @@
             <div class="contenedor">
 
                 <ion-grid>
+                    <ion-row class="ion-text-center">
+                        <ion-col>
+                           <h2>Carrito de compras</h2> 
+                        </ion-col>
+                    </ion-row>
+
+                    <!-- MUESTRA PRODUCTOS DEL CARRITO -->
+                    <ion-row class="cssCarrito">
+                        <ion-col style="padding-top: 22px;">
+                            <img src="https://ionicframework.com/docs/img/demos/card-media.png">
+                        </ion-col>
+                        <ion-col>
+                            <ion-card-header>
+                                <ion-card-subtitle>Comidas</ion-card-subtitle>
+                                <ion-card-title>Filete</ion-card-title>
+                            </ion-card-header>
+                            <ion-card-content>Here's a small text description for the card content. Nothing more, nothing less.
+                                <br>
+                            <b>Precio:</b> 0
+                            </ion-card-content>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row class="cssCarrito">
+                        <ion-col style="padding-top: 22px;">
+                            <img src="https://ionicframework.com/docs/img/demos/card-media.png">
+                        </ion-col>
+                        <ion-col>
+                            <ion-card-header>
+                                <ion-card-subtitle>Comidas</ion-card-subtitle>
+                                <ion-card-title>Filete</ion-card-title>
+                            </ion-card-header>
+                            <ion-card-content>Here's a small text description for the card content. Nothing more, nothing less.
+                                <br>
+                            <b>Precio:</b> 0
+                            </ion-card-content>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row class="cssCarrito">
+                        <ion-col style="padding-top: 22px;">
+                            <img src="https://ionicframework.com/docs/img/demos/card-media.png">
+                        </ion-col>
+                        <ion-col>
+                            <ion-card-header>
+                                <ion-card-subtitle>Comidas</ion-card-subtitle>
+                                <ion-card-title>Filete</ion-card-title>
+                            </ion-card-header>
+                            <ion-card-content>Here's a small text description for the card content. Nothing more, nothing less.
+                                <br>
+                            <b>Precio:</b> 0
+                            </ion-card-content>
+                        </ion-col>
+                    </ion-row>
+
                     <ion-row>
                         <ion-col>
-                            
+                            <div class="cart-container">
+                                <div class="cart-content">
+                                    <div class="cart-icon">&#128722;</div>
+                                    <div class="cart-total">TOTAL DE COMPRA: $99</div>
+                                </div>
+                            </div>
+                        </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                        <ion-col>
+                            <div class="payment-button">
+                                <img src="https://cdn-icons-png.flaticon.com/128/5776/5776691.png" alt="Stripe Logo">
+                                <a href="#">Pagar con efectivo</a>
+                            </div>
+
+                            <div class="payment-button">
+                                <img src="https://cdn-icons-png.flaticon.com/128/174/174861.png" alt="PayPal Logo">
+                                <a href="#">Pagar con PayPal</a>
+                            </div>
+
+                            <div class="payment-button">
+                                <img src="https://cdn-icons-png.flaticon.com/128/5949/5949784.png" alt="Tarjetas de Crédito Logo">
+                                <a href="#">Pagar con Tarjeta de Crédito o Debito</a>
+                            </div>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
@@ -71,6 +150,63 @@ export default {
 .sltCategorias{
     text-align: center;
     background: #E6E6E6;
+}
+
+/* TOTAL COMPRA */
+.cart-container {
+    background-color: #f5ea95;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%; /* Centra verticalmente en la ventana */
+    padding: 10px;
+    border-top: 5px solid #fc8e5b;
+}
+
+.cart-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.cart-icon {
+    font-size: 24px;
+    margin-right: 10px;
+}
+
+.cart-total {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+/* CSS BOTONES PAGO (ELIMINAR DESPUES) */
+.payment-button {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 10px;
+    text-decoration: none;
+    color: #333;
+    transition: background-color 0.3s ease;
+    display: inline-block;
+}
+
+.payment-button img {
+    max-width: 40px; /* Tamaño del logotipo ajustado */
+    height: auto;
+    vertical-align: middle;
+    margin-right: 10px;
+}
+
+.payment-button a {
+    text-decoration: none;
+    color: #333;
+}
+
+.payment-button:hover {
+    background-color: #eee;
 }
 
 /* #container {
