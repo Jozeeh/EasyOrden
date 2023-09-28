@@ -23,52 +23,45 @@
                         </ion-col>
                     </ion-row>
 
-                    <!-- MUESTRA PRODUCTOS DEL CARRITO -->
-                    <ion-row class="cssCarrito">
-                        <ion-col style="padding-top: 22px;">
-                            <img src="https://ionicframework.com/docs/img/demos/card-media.png">
-                        </ion-col>
+                    <ion-row>
                         <ion-col>
-                            <ion-card-header>
-                                <ion-card-subtitle>Comidas</ion-card-subtitle>
-                                <ion-card-title>Filete</ion-card-title>
-                            </ion-card-header>
-                            <ion-card-content>Here's a small text description for the card content. Nothing more, nothing less.
-                                <br>
-                            <b>Precio:</b> 0
-                            </ion-card-content>
-                        </ion-col>
-                    </ion-row>
+                            <ion-card>
+                                <ion-card-header>
+                                    <ion-card-title>Platos seleccionados</ion-card-title>
+                                    <ion-card-subtitle>platillos a comprar:</ion-card-subtitle>
+                                </ion-card-header>
+                                <ion-card-content>
+                                    <ion-list>
+                                        <ion-item>
+                                            <ion-thumbnail slot="start">
+                                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                                            </ion-thumbnail>
+                                            <ion-label>Filete <b>($3.99)</b></ion-label>
+                                        </ion-item>
 
-                    <ion-row class="cssCarrito">
-                        <ion-col style="padding-top: 22px;">
-                            <img src="https://ionicframework.com/docs/img/demos/card-media.png">
-                        </ion-col>
-                        <ion-col>
-                            <ion-card-header>
-                                <ion-card-subtitle>Comidas</ion-card-subtitle>
-                                <ion-card-title>Filete</ion-card-title>
-                            </ion-card-header>
-                            <ion-card-content>Here's a small text description for the card content. Nothing more, nothing less.
-                                <br>
-                            <b>Precio:</b> 0
-                            </ion-card-content>
-                        </ion-col>
-                    </ion-row>
+                                        <ion-item>
+                                            <ion-thumbnail slot="start">
+                                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                                            </ion-thumbnail>
+                                            <ion-label>Filete <b>($3.99)</b></ion-label>
+                                        </ion-item>
 
-                    <ion-row class="cssCarrito">
-                        <ion-col style="padding-top: 22px;">
-                            <img src="https://ionicframework.com/docs/img/demos/card-media.png">
-                        </ion-col>
-                        <ion-col>
-                            <ion-card-header>
-                                <ion-card-subtitle>Comidas</ion-card-subtitle>
-                                <ion-card-title>Filete</ion-card-title>
-                            </ion-card-header>
-                            <ion-card-content>Here's a small text description for the card content. Nothing more, nothing less.
-                                <br>
-                            <b>Precio:</b> 0
-                            </ion-card-content>
+                                        <ion-item>
+                                            <ion-thumbnail slot="start">
+                                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                                            </ion-thumbnail>
+                                            <ion-label>Filete <b>($3.99)</b></ion-label>
+                                        </ion-item>
+
+                                        <ion-item>
+                                            <ion-thumbnail slot="start">
+                                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                                            </ion-thumbnail>
+                                            <ion-label>Filete <b>($3.99)</b></ion-label>
+                                        </ion-item>
+                                    </ion-list>
+                                </ion-card-content>
+                                </ion-card>
                         </ion-col>
                     </ion-row>
 
@@ -110,14 +103,14 @@
 
 
 <script>
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonBackButton } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonBackButton, IonList, IonLabel, IonItem, IonThumbnail } from '@ionic/vue';
 
 import {cart} from 'ionicons/icons';
 
 export default {
     name: 'InicioPage',
     components: {
-        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonBackButton
+        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonBackButton, IonList, IonLabel, IonItem, IonThumbnail
     },
     data() {
         return {
