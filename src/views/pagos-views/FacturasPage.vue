@@ -25,59 +25,84 @@
 
                     <ion-row>
                         <ion-col>
-                            <div class="invoice">
-                                <div class="header">
-                                    <h1>Factura de Pago Exitoso</h1>
-                                </div>
-                                <div class="details">
-                                    <div class="left">
-                                        <p><strong>Cliente:</strong> Nombre del Cliente</p>
-                                        <p><strong>Fecha:</strong> 28 de Septiembre de 2023</p>
-                                    </div>
-                                    <div class="right">
-                                        <p><strong>Número de Factura:</strong> 12345</p>
-                                    </div>
-                                </div>
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Descripción</th>
-                                            <th>Cantidad</th>
-                                            <th>Precio Unitario</th>
-                                            <th>Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>Producto 1</td>
-                                            <td>2</td>
-                                            <td>$50.00</td>
-                                            <td>$100.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Producto 2</td>
-                                            <td>1</td>
-                                            <td>$75.00</td>
-                                            <td>$75.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>Producto 3</td>
-                                            <td>3</td>
-                                            <td>$30.00</td>
-                                            <td>$90.00</td>
-                                        </tr>
-                                    </tbody>
-                                    <tfoot>
-                                        <tr>
-                                            <td colspan="3" class="total-label">Total:</td>
-                                            <td class="total-amount">$265.00</td>
-                                        </tr>
-                                    </tfoot>
-                                </table>
-                                <div class="footer">
-                                    <p>¡Gracias por su compra!</p>
-                                </div>
-                            </div>
+                            <ion-grid>
+                                <ion-row>
+                                    <ion-col size="12">
+                                        <ion-card class="detalleFactura">
+                                        <ion-card-header>
+                                            <ion-card-title>Detalles de la Factura</ion-card-title>
+                                        </ion-card-header>
+                                        <ion-card-content>
+                                            <ion-row>
+                                            <ion-col size="6">
+                                                <p><strong>Cliente:</strong> Nombre del Cliente</p>
+                                                <p><strong>Fecha:</strong> 28 de Septiembre de 2023</p>
+                                            </ion-col>
+                                            <ion-col size="6">
+                                                <p><strong>Número de Factura:</strong> 12345</p>
+                                            </ion-col>
+                                            </ion-row>
+                                        </ion-card-content>
+                                        </ion-card>
+                                    </ion-col>
+                                </ion-row>
+
+                                <ion-row>
+                                    <ion-col size="12">
+                                        <ion-card class="detalleFactura">
+                                        <ion-card-header>
+                                            <ion-card-title>Detalles de Producto</ion-card-title>
+                                        </ion-card-header>
+                                        <ion-card-content>
+                                            <ion-table>
+                                                <ion-row>
+                                                    <ion-col><b>Producto (cantidad):</b></ion-col>
+                                                    <ion-col><b>Precio Unitario:</b></ion-col>
+                                                    <ion-col><b>Total:</b></ion-col>
+                                                </ion-row>
+                                                <ion-row>
+                                                    <ion-col>Filete (2)</ion-col>
+                                                    <ion-col>$9</ion-col>
+                                                    <ion-col>$18</ion-col>
+                                                </ion-row>
+                                                <ion-row>
+                                                    <ion-col>Coca-Cola (3)</ion-col>
+                                                    <ion-col>$3</ion-col>
+                                                    <ion-col>$9</ion-col>
+                                                </ion-row>
+                                            </ion-table>
+                                        </ion-card-content>
+                                        </ion-card>
+                                    </ion-col>
+                                </ion-row>
+
+                                <ion-row>
+                                    <ion-col size="12">
+                                        <ion-card class="detalleFactura">
+                                        <ion-card-content>
+                                            <ion-row>
+                                            <ion-col size="9">
+                                                <p class="total-label">Total:</p>
+                                            </ion-col>
+                                            <ion-col size="3" class="total-amount">
+                                                $265.00
+                                            </ion-col>
+                                            </ion-row>
+                                        </ion-card-content>
+                                        </ion-card>
+                                    </ion-col>
+                                </ion-row>
+
+                                <ion-row>
+                                    <ion-col size="12">
+                                        <ion-card class="detalleFactura">
+                                        <ion-card-content>
+                                            <p class="footer">¡Gracias por su compra!</p>
+                                        </ion-card-content>
+                                        </ion-card>
+                                    </ion-col>
+                                </ion-row>
+                            </ion-grid>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
@@ -121,57 +146,8 @@ export default {
 }
 
 /* ESTILO DE FACTURA */
-.invoice {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-    border: 1px solid #ccc;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-.header {
-    text-align: center;
-}
-
-.header h1 {
-    font-size: 24px;
-    margin: 0;
-}
-
-.details {
-    display: flex;
-    justify-content: space-between;
-    margin-top: 20px;
-}
-
-.left, .right {
-    width: 50%;
-}
-
-.table {
-    width: 100%;
-    margin-top: 20px;
-    border-collapse: collapse;
-}
-
-.table th, .table td {
-    border: 1px solid #ccc;
-    padding: 10px;
-    text-align: left;
-}
-
-.total-label {
-    text-align: right;
-    font-weight: bold;
-}
-
-.total-amount {
-    font-weight: bold;
-}
-
-.footer {
-    margin-top: 20px;
-    text-align: center;
+.detalleFactura {
+    border-top: 5px solid #fc8e5b;
 }
 /* END FACTURA */
 

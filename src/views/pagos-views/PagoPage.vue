@@ -85,12 +85,12 @@
 
                             <div class="payment-button">
                                 <img src="https://cdn-icons-png.flaticon.com/128/174/174861.png" alt="PayPal Logo">
-                                <a href="#">Pagar con PayPal</a>
+                                <a href="/facturas">Pagar con PayPal</a>
                             </div>
 
                             <div class="payment-button">
                                 <img src="https://cdn-icons-png.flaticon.com/128/5949/5949784.png" alt="Tarjetas de Crédito Logo">
-                                <a href="#">Pagar con Tarjeta de Crédito o Debito</a>
+                                <a href="/facturas">Pagar con Tarjeta de Crédito o Debito</a>
                             </div>
                         </ion-col>
                     </ion-row>
