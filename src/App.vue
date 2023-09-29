@@ -7,8 +7,19 @@
             <ion-list-header>Nombre Apellido</ion-list-header>
             <ion-note>invitado@app.com</ion-note>
 
+            <ion-list-header>Usuario</ion-list-header> <br>
             <ion-menu-toggle :auto-hide="false" v-for="(p, i) in appPages" :key="i">
-              <ion-item @click="selectedIndex = i" router-direction="root" :router-link="p.url" lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
+              <ion-item @click="setSelectedIndex(i)" router-direction="root" :router-link="p.url" lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
+                <ion-icon aria-hidden="true" slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
+                <ion-label>{{ p.title }}</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
+
+          <ion-list id="inbox-list">
+            <ion-list-header>Productos</ion-list-header> <br>
+            <ion-menu-toggle :auto-hide="false" v-for="(p, i) in productosPage" :key="i">
+              <ion-item @click="setSelectedIndex(i + appPages.length)" router-direction="root" :router-link="p.url" lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i + appPages.length }">
                 <ion-icon aria-hidden="true" slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
@@ -25,14 +36,15 @@
 
 <script setup>
 import {
-  IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane,
+  IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane
 } from '@ionic/vue';
 import { ref } from 'vue';
 import {
-  home, archiveOutline, archiveSharp, bookmarkOutline, bookmarkSharp, heartOutline, heartSharp, mailOutline, mailSharp, paperPlaneOutline, paperPlaneSharp, trashOutline, trashSharp, warningOutline, warningSharp,
+  home, person, personAdd, settings, document, addCircle, restaurant
 } from 'ionicons/icons';
 
 const selectedIndex = ref(0);
+
 const appPages = [
   {
     title: 'Inicio',
@@ -43,34 +55,52 @@ const appPages = [
   {
     title: 'Iniciar sesión',
     url: '/folder/Inbox',
-    iosIcon: mailOutline,
-    mdIcon: mailSharp,
+    iosIcon: person,
+    mdIcon: person,
   },
   {
     title: 'Registrarse',
     url: '/folder/Outbox',
-    iosIcon: paperPlaneOutline,
-    mdIcon: paperPlaneSharp,
+    iosIcon: personAdd,
+    mdIcon: personAdd,
   },
   {
     title: 'Ajustes',
     url: '/folder/Favorites',
-    iosIcon: heartOutline,
-    mdIcon: heartSharp,
+    iosIcon: settings,
+    mdIcon: settings,
   },
   {
     title: 'Acerca de',
     url: '/folder/Archived',
-    iosIcon: archiveOutline,
-    mdIcon: archiveSharp,
+    iosIcon: document,
+    mdIcon: document,
   },
-  
+];
+
+const productosPage = [
+  {
+    title: 'Gestionar producto',
+    url: '/gestionar-producto',
+    iosIcon: addCircle,
+    mdIcon: addCircle,
+  },
+  {
+    title: 'Pedidos a preparar',
+    url: '/pedidos-preparar',
+    iosIcon: restaurant,
+    mdIcon: restaurant,
+  },
 ];
 
 const path = window.location.pathname.split('folder/')[1];
 if (path !== undefined) {
   selectedIndex.value = appPages.findIndex((page) => page.title.toLowerCase() === path.toLowerCase());
 }
+
+const setSelectedIndex = (index) => {
+  selectedIndex.value = index;
+};
 </script>
 
 <style scoped>

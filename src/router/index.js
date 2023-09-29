@@ -6,6 +6,8 @@ import PostresPage from '../views/categorias-views/PostresPage.vue'
 import OtrosPage from '../views/categorias-views/OtrosPage.vue'
 import PagoPage from '../views/pagos-views/PagoPage.vue'
 import FacturasPage from '../views/pagos-views/FacturasPage.vue'
+import GestionarProductoPage from '../views/productos-views/GestionarProductoPage.vue'
+import PedidosPrepararPage from '../views/productos-views/PedidosPrepararPage.vue'
 
 const routes = [
   {
@@ -39,6 +41,14 @@ const routes = [
   {
     path: '/facturas',
     component: FacturasPage
+  },
+  {
+    path: '/gestionar-producto',
+    component: GestionarProductoPage
+  },
+  {
+    path: '/pedidos-preparar',
+    component: PedidosPrepararPage
   },
   
   {
