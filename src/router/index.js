@@ -4,7 +4,8 @@ import ComidasPage from '../views/categorias-views/ComidasPage.vue'
 import BebidasPage from '../views/categorias-views/BebidasPage.vue'
 import PostresPage from '../views/categorias-views/PostresPage.vue'
 import OtrosPage from '../views/categorias-views/OtrosPage.vue'
-import PagoPage from '../views/PagoPage.vue'
+import PagoPage from '../views/pagos-views/PagoPage.vue'
+import FacturasPage from '../views/pagos-views/FacturasPage.vue'
 
 const routes = [
   {
@@ -34,6 +35,10 @@ const routes = [
   {
     path: '/pagar',
     component: PagoPage
+  },
+  {
+    path: '/facturas',
+    component: FacturasPage
   },
   
   {

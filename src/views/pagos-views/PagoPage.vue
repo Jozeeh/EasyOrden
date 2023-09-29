@@ -80,7 +80,7 @@
                         <ion-col>
                             <div class="payment-button">
                                 <img src="https://cdn-icons-png.flaticon.com/128/5776/5776691.png" alt="Stripe Logo">
-                                <a href="#">Pagar con efectivo</a>
+                                <a href="/facturas">Pagar con efectivo</a>
                             </div>
 
                             <div class="payment-button">
