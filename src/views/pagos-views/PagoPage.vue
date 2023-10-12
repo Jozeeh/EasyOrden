@@ -32,32 +32,12 @@
                                 </ion-card-header>
                                 <ion-card-content>
                                     <ion-list>
-                                        <ion-item>
+                                        <ion-item v-for="(producto, i) in carrito" :key="i">
                                             <ion-thumbnail slot="start">
-                                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
+                                            <img alt="producto-imagen" :src="producto.imagen" />
                                             </ion-thumbnail>
-                                            <ion-label>Filete <b>($3.99)</b></ion-label>
-                                        </ion-item>
-
-                                        <ion-item>
-                                            <ion-thumbnail slot="start">
-                                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                                            </ion-thumbnail>
-                                            <ion-label>Filete <b>($3.99)</b></ion-label>
-                                        </ion-item>
-
-                                        <ion-item>
-                                            <ion-thumbnail slot="start">
-                                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                                            </ion-thumbnail>
-                                            <ion-label>Filete <b>($3.99)</b></ion-label>
-                                        </ion-item>
-
-                                        <ion-item>
-                                            <ion-thumbnail slot="start">
-                                            <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/thumbnail.svg" />
-                                            </ion-thumbnail>
-                                            <ion-label>Filete <b>($3.99)</b></ion-label>
+                                            <ion-label>{{ producto.nombrePlato }}</ion-label>
+                                            <ion-label>$ {{ producto.precio }}</ion-label>
                                         </ion-item>
                                     </ion-list>
                                 </ion-card-content>
@@ -70,7 +50,7 @@
                             <div class="cart-container">
                                 <div class="cart-content">
                                     <div class="cart-icon">&#128722;</div>
-                                    <div class="cart-total">TOTAL DE COMPRA: $99</div>
+                                    <div class="cart-total">TOTAL DE COMPRA: $ {{ this.$store.getters.getTotalCarrito }}</div>
                                 </div>
                             </div>
                         </ion-col>
@@ -78,20 +58,20 @@
 
                     <ion-row>
                         <ion-col>
-                            <div class="payment-button">
+                            <button class="payment-button" @click="confirmarPago()">
                                 <img src="https://cdn-icons-png.flaticon.com/128/5776/5776691.png" alt="Stripe Logo">
-                                <a href="/facturas">Pagar con efectivo</a>
-                            </div>
+                                Pagar con efectivo
+                            </button>
 
-                            <div class="payment-button">
+                            <button class="payment-button" @click="confirmarPago()">
                                 <img src="https://cdn-icons-png.flaticon.com/128/174/174861.png" alt="PayPal Logo">
-                                <a href="/facturas">Pagar con PayPal</a>
-                            </div>
+                                Pagar con PayPal
+                            </button>
 
-                            <div class="payment-button">
+                            <button class="payment-button" @click="confirmarPago()">
                                 <img src="https://cdn-icons-png.flaticon.com/128/5949/5949784.png" alt="Tarjetas de Crédito Logo">
-                                <a href="/facturas">Pagar con Tarjeta de Crédito o Debito</a>
-                            </div>
+                                Pagar con Tarjeta de Crédito o Debito
+                            </button>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
@@ -114,7 +94,14 @@ export default {
     },
     data() {
         return {
-            cart
+            cart,
+
+            carrito: this.$store.getters.getCarrito
+        }
+    },
+    methods: {
+        confirmarPago() {
+            this.$router.push('/facturas')
         }
     }
 }

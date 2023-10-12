@@ -20,72 +20,34 @@
                     </ion-row>
 
                     <ion-row>
-                        <ion-col>
+                        <ion-col v-for="(preparar, i) in pedidos" :key="i">
                             <ion-card>
-                                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+                                <img alt="pedido-imagen" :src="preparar.imagen" />
                                 <ion-card-header>
-                                    <ion-card-title>Card Title</ion-card-title>
-                                    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                                    <ion-card-title>{{ preparar.nombrePlato }}</ion-card-title>
+                                    <ion-card-title>$ {{ preparar.precio }}</ion-card-title>
                                 </ion-card-header>
 
                                 <ion-card-content>
-                                    Here's a small text description for the card content. Nothing more, nothing less.
+                                    <b>El pedido fue hecho:</b><br>
+                                    {{ preparar.created_at }}
                                     <br>
-                                    <ion-button color="success">Marcar listo</ion-button>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
 
-                        <ion-col>
-                            <ion-card>
-                                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-                                <ion-card-header>
-                                    <ion-card-title>Card Title</ion-card-title>
-                                    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-                                </ion-card-header>
+                                    <!-- Si el pedido es recien creado -->
+                                    <ion-button v-if="preparar.estadoPedido == 'Ordenado'" color="warning">Marcar en
+                                        preparación</ion-button>
 
-                                <ion-card-content>
-                                    Here's a small text description for the card content. Nothing more, nothing less.
-                                    <br>
-                                    <ion-button color="success">Marcar listo</ion-button>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
+                                    <ion-button v-if="preparar.estadoPedido == 'En preparación'" color="primary">Marcar
+                                        listo</ion-button>
 
-                        <ion-col>
-                            <ion-card>
-                                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-                                <ion-card-header>
-                                    <ion-card-title>Card Title</ion-card-title>
-                                    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-                                </ion-card-header>
-
-                                <ion-card-content>
-                                    Here's a small text description for the card content. Nothing more, nothing less.
-                                    <br>
-                                    <ion-button color="success">Marcar listo</ion-button>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
-
-                        <ion-col>
-                            <ion-card>
-                                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-                                <ion-card-header>
-                                    <ion-card-title>Card Title</ion-card-title>
-                                    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-                                </ion-card-header>
-
-                                <ion-card-content>
-                                    Here's a small text description for the card content. Nothing more, nothing less.
-                                    <br>
-                                    <ion-button color="success">Marcar listo</ion-button>
+                                    <ion-button v-if="preparar.estadoPedido == 'Entregado'" color="success"
+                                        disabled>ENTREGADO!</ion-button>
                                 </ion-card-content>
                             </ion-card>
                         </ion-col>
                     </ion-row>
                 </ion-grid>
-                
+
             </div>
         </ion-content>
     </ion-page>
@@ -95,7 +57,9 @@
 <script>
 import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter } from '@ionic/vue';
 
-import {cart} from 'ionicons/icons';
+import { cart } from 'ionicons/icons';
+
+import axios from 'axios';
 
 export default {
     name: 'InicioPage',
@@ -104,8 +68,25 @@ export default {
     },
     data() {
         return {
-            cart
+            pedidos: {}
         }
+    },
+    methods: {
+        // Obtenemos los pedidos que se han hecho con los detalles del plato
+        obtenerPedidos() {
+            axios.get(`http://127.0.0.1:8000/api/pedidos/select`)
+                .then(response => {
+                    this.pedidos = response.data.data
+                    console.log(response.data.data);
+                })
+                //Si ocurre un error se imprimirá en consola
+                .catch(error => {
+                    console.error('OCURRIO UN ERROR: ', error);
+                })
+        }
+    },
+    mounted() {
+        this.obtenerPedidos()
     }
 }
 </script>
@@ -123,6 +104,4 @@ export default {
     width: 90%;
     margin: 0 auto;
 }
-
-
 </style>

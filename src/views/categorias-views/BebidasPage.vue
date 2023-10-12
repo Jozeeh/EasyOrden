@@ -125,7 +125,9 @@ export default {
     },
     data() {
         return {
-            cart
+            cart,
+
+            
         }
     }
 }

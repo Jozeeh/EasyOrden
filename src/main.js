@@ -2,6 +2,9 @@ import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router';
 
+// LIBRERIAS PARA VUEX
+import store from './store';
+
 import { IonicVue } from '@ionic/vue';
 
 /* Core CSS required for Ionic components to work properly */
@@ -25,7 +28,10 @@ import './theme/variables.css';
 
 const app = createApp(App)
   .use(IonicVue)
-  .use(router);
+  .use(router)
+
+  //VUEX
+  .use(store);
   
 router.isReady().then(() => {
   app.mount('#app');

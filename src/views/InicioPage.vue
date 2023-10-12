@@ -11,7 +11,7 @@
 
         <ion-content>
             <div class="contenedor">
-
+                
                 <ion-grid>
                     <ion-row class="ion-justify-content-center">
                         <ion-col>
@@ -21,6 +21,21 @@
 
                     <ion-row>
                         <ion-col>
+                            <ion-card>
+                                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+                                <ion-card-header>
+                                    <ion-card-title>Productos</ion-card-title>
+                                </ion-card-header>
+
+                                <ion-card-content>
+                                    Puedes comprar comidas aquí.
+                                    <br>
+                                    <ion-button color="warning" router-link="/productos">Productos</ion-button>
+                                </ion-card-content>
+                            </ion-card>
+                        </ion-col>
+
+                        <!-- <ion-col>
                             <ion-card>
                                 <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
                                 <ion-card-header>
@@ -78,7 +93,7 @@
                                     <ion-button color="warning" router-link="/otros">Otros</ion-button>
                                 </ion-card-content>
                             </ion-card>
-                        </ion-col>
+                        </ion-col> -->
                     </ion-row>
                 </ion-grid>
             </div>
@@ -88,7 +103,7 @@
             <ion-toolbar router-link="/pagar" color="primary">
                 <center>
                     <ion-icon aria-hidden="true" slot="start" :ios="cart" :md="cart"></ion-icon>
-                    Pagar - Productos: 0
+                    Pagar - Productos: {{ this.$store.getters.getCantidadCarrito }}
                 </center>
             </ion-toolbar>
         </ion-footer>
