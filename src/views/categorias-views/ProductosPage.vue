@@ -3,7 +3,7 @@
         <ion-header :translucent="true">
             <ion-toolbar class="bgcolor-header">
                 <ion-buttons slot="start">
-                    <ion-back-button text="Atrás" :icon="caretBack"></ion-back-button>
+                    <ion-back-button text="Atrás"></ion-back-button>
                 </ion-buttons>
 
                 <ion-buttons slot="end">
@@ -80,6 +80,7 @@ export default {
     data() {
         return {
             cart,
+            ipLocal: this.$store.state.ipLocal,
 
             categoria: 'Comidas',
             productos: {}
@@ -93,7 +94,7 @@ export default {
 
         // Obtenemos los plato según la categoria
         obtenerPlatos() {
-            axios.get(`http://127.0.0.1:8000/api/platos/select/${this.categoria}`)
+            axios.get(`http://${this.ipLocal}/api/platos/select/${this.categoria}`)
             .then(response => {
                 this.productos = response.data.data
                 console.log(response.data.data);

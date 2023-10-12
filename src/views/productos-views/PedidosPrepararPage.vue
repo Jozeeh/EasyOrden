@@ -68,13 +68,15 @@ export default {
     },
     data() {
         return {
+            ipLocal: this.$store.state.ipLocal,
+
             pedidos: {}
         }
     },
     methods: {
         // Obtenemos los pedidos que se han hecho con los detalles del plato
         obtenerPedidos() {
-            axios.get(`http://127.0.0.1:8000/api/pedidos/select`)
+            axios.get(`http://${this.ipLocal}/api/pedidos/select`)
                 .then(response => {
                     this.pedidos = response.data.data
                     console.log(response.data.data);

@@ -3,7 +3,7 @@
         <ion-header :translucent="true">
             <ion-toolbar class="bgcolor-header">
                 <ion-buttons slot="start">
-                    <ion-back-button text="Atrás" :icon="caretBack"></ion-back-button>
+                    <ion-back-button text="Atrás"></ion-back-button>
                 </ion-buttons>
 
                 <ion-buttons slot="end">
@@ -32,7 +32,7 @@
                                 </ion-card-header>
                                 <ion-card-content>
                                     <ion-list>
-                                        <ion-item v-for="(producto, i) in carrito" :key="i">
+                                        <ion-item v-for="(producto, i) in this.$store.getters.getCarrito" :key="i">
                                             <ion-thumbnail slot="start">
                                             <img alt="producto-imagen" :src="producto.imagen" />
                                             </ion-thumbnail>
@@ -62,12 +62,16 @@
                                 <img src="https://cdn-icons-png.flaticon.com/128/5776/5776691.png" alt="Stripe Logo">
                                 Pagar con efectivo
                             </button>
+                        </ion-col>
 
+                        <ion-col>
                             <button class="payment-button" @click="confirmarPago()">
                                 <img src="https://cdn-icons-png.flaticon.com/128/174/174861.png" alt="PayPal Logo">
                                 Pagar con PayPal
                             </button>
+                        </ion-col>
 
+                        <ion-col>
                             <button class="payment-button" @click="confirmarPago()">
                                 <img src="https://cdn-icons-png.flaticon.com/128/5949/5949784.png" alt="Tarjetas de Crédito Logo">
                                 Pagar con Tarjeta de Crédito o Debito

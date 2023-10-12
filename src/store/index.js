@@ -2,7 +2,7 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-    test: 'hola',
+    ipLocal: '192.168.0.15:8000',
 
     //Array de la lista de comidas a pedir
     carrito: []
@@ -30,8 +30,8 @@ export default createStore({
       console.log(nuevoProducto)
       state.carrito.push(nuevoProducto)
     },
-    eliminarCarrito(state, index){
-      state.carrito.splice(index, 1)
+    eliminarCarrito(state){
+      state.carrito = []
     }
         
   },
@@ -40,8 +40,8 @@ export default createStore({
       context.commit('agregarCarrito', nuevoProducto)
     },
 
-    eliminarCarritoAccion(context, index){
-      context.commit('eliminarCarrito', index)
+    eliminarCarritoAccion(context){
+      context.commit('eliminarCarrito')
     }
 
   }

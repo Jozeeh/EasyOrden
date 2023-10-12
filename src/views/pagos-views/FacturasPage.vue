@@ -3,7 +3,7 @@
         <ion-header :translucent="true">
             <ion-toolbar class="bgcolor-header">
                 <ion-buttons slot="start">
-                    <ion-back-button text="Atrás" :icon="caretBack"></ion-back-button>
+                    <ion-back-button text="Atrás"></ion-back-button>
                 </ion-buttons>
 
                 <ion-buttons slot="end">
@@ -19,7 +19,7 @@
                 <ion-grid>
                     <ion-row class="ion-text-center">
                         <ion-col>
-                            <ion-button color="danger" router-link="/inicio">Volver al inicio</ion-button>
+                            <ion-button color="danger" @click="reiniciarCarrito">Volver al inicio</ion-button>
                         </ion-col>
                     </ion-row>
 
@@ -54,23 +54,11 @@
                                             <ion-card-title>Detalles de Producto</ion-card-title>
                                         </ion-card-header>
                                         <ion-card-content>
-                                            <ion-table>
-                                                <ion-row>
-                                                    <ion-col><b>Producto (cantidad):</b></ion-col>
-                                                    <ion-col><b>Precio Unitario:</b></ion-col>
-                                                    <ion-col><b>Total:</b></ion-col>
-                                                </ion-row>
-                                                <ion-row>
-                                                    <ion-col>Filete (2)</ion-col>
-                                                    <ion-col>$9</ion-col>
-                                                    <ion-col>$18</ion-col>
-                                                </ion-row>
-                                                <ion-row>
-                                                    <ion-col>Coca-Cola (3)</ion-col>
-                                                    <ion-col>$3</ion-col>
-                                                    <ion-col>$9</ion-col>
-                                                </ion-row>
-                                            </ion-table>
+                                            <ion-row v-for="(producto, i) in carrito" :key="i">
+                                                <ion-col>
+                                                    <ion-label>ID:{{ producto.idPlato }} {{ producto.nombrePlato }} ${{ producto.precio }}</ion-label>
+                                                </ion-col>
+                                            </ion-row>
                                         </ion-card-content>
                                         </ion-card>
                                     </ion-col>
@@ -85,7 +73,7 @@
                                                 <p class="total-label">Total:</p>
                                             </ion-col>
                                             <ion-col size="3" class="total-amount">
-                                                $265.00
+                                                {{this.$store.getters.getTotalCarrito}}
                                             </ion-col>
                                             </ion-row>
                                         </ion-card-content>
@@ -114,19 +102,46 @@
 
 
 <script>
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonBackButton, IonList, IonLabel, IonItem, IonThumbnail } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonBackButton, IonList, IonLabel, IonItem, IonThumbnail, } from '@ionic/vue';
 
 import {cart} from 'ionicons/icons';
+
+import axios from 'axios';
 
 export default {
     name: 'InicioPage',
     components: {
-        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonBackButton, IonList, IonLabel, IonItem, IonThumbnail
+        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonBackButton, IonList, IonLabel, IonItem, IonThumbnail,
     },
     data() {
         return {
-            cart
+            cart,
+            ipLocal: this.$store.state.ipLocal,
+            carrito: this.$store.getters.getCarrito,
+            pedido: {
+                "fkIdPlato": this.$store.getters.getCarrito.idPlato,
+                "estadoPedido": "Ordenado"
+            }
         }
+    },
+    methods: {
+        reiniciarCarrito(){
+            this.$store.dispatch('eliminarCarritoAccion')
+            this.$router.push('/inicio')
+        },
+        mandarCocina(){
+            axios.post(`http://${this.ipLocal}/api/pedidos/store`, this.pedido)
+            .then(response => {
+                console.log(response.data)
+                // this.showToast(true, 'Teléfono agregado')
+
+                // reiniciarCarrito()
+            })
+            .catch(error => console.error("OCURRIO UN ERROR:", error))
+        }
+    },
+    mounted() {
+        
     }
 }
 </script>

@@ -1,0 +1,5 @@
+Ver el proyecto de manera local
+ionic serve --host=0.0.0.0 --port=8100
+
+Para laravel
+php artisan serve --host=<ip_de_la_pc:8000>
