@@ -126,7 +126,6 @@ export default {
     methods: {
         reiniciarCarrito(){
             this.$store.dispatch('eliminarCarritoAccion')
-            this.$router.push('/inicio')
         },
         mandarCocina(){
             this.pedido = {
@@ -142,6 +141,7 @@ export default {
                 // this.showToast(true, 'Comida en proceso')
 
                 this.reiniciarCarrito()
+                this.$router.push('/inicio')
             })
             .catch(error => console.error("OCURRIO UN ERROR:", error))
         }
