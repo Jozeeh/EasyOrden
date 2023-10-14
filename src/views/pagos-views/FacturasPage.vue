@@ -17,11 +17,7 @@
             <div class="contenedor">
 
                 <ion-grid>
-                    <ion-row class="ion-text-center">
-                        <ion-col>
-                            <ion-button color="danger" @click="reiniciarCarrito">Volver al inicio</ion-button>
-                        </ion-col>
-                    </ion-row>
+                    
 
                     <ion-row>
                         <ion-col>
@@ -90,6 +86,12 @@
                                         </ion-card>
                                     </ion-col>
                                 </ion-row>
+
+                                <ion-row class="ion-text-center">
+                        <ion-col>
+                                <ion-button color="danger" @click="mandarCocina">Volver al inicio</ion-button>
+                        </ion-col>
+                    </ion-row>
                             </ion-grid>
                         </ion-col>
                     </ion-row>
@@ -118,10 +120,7 @@ export default {
             cart,
             ipLocal: this.$store.state.ipLocal,
             carrito: this.$store.getters.getCarrito,
-            pedido: {
-                "fkIdPlato": this.$store.getters.getCarrito.idPlato,
-                "estadoPedido": "Ordenado"
-            }
+            pedido: {}
         }
     },
     methods: {
@@ -130,12 +129,19 @@ export default {
             this.$router.push('/inicio')
         },
         mandarCocina(){
+            this.pedido = {
+                detalles: this.carrito.map(producto => ({
+                    fkIdPlato: producto.idPlato,
+                    estadoPedido: 'Ordenado'
+                }))
+            };
+
             axios.post(`http://${this.ipLocal}/api/pedidos/store`, this.pedido)
             .then(response => {
                 console.log(response.data)
-                // this.showToast(true, 'Teléfono agregado')
+                // this.showToast(true, 'Comida en proceso')
 
-                // reiniciarCarrito()
+                this.reiniciarCarrito()
             })
             .catch(error => console.error("OCURRIO UN ERROR:", error))
         }
