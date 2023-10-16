@@ -23,52 +23,50 @@
 
                         <ion-col size="12">
                         <ion-item>
-                            <ion-label position="stacked">ID</ion-label>
-                            <ion-input disabled></ion-input>
-                        </ion-item>
-                        </ion-col>
-                        <ion-col size="12">
-                        <ion-item>
-                            <ion-label position="stacked">Categoría</ion-label>
-                            <ion-select>
-                            <!-- Aquí puedes agregar opciones para la categoría -->
-                            <ion-select-option value="Comidas">Comidas</ion-select-option>
-                            <ion-select-option value="Bebidas">Bebidas</ion-select-option>
-                            <ion-select-option value="Postres">Postres</ion-select-option>
-                            <ion-select-option value="Otros">Otros</ion-select-option>
-                            </ion-select>
-                        </ion-item>
-                        </ion-col>
-                        <ion-col size="12">
-                        <ion-item>
-                            <ion-label position="stacked">Título</ion-label>
-                            <ion-input type="text"></ion-input>
-                        </ion-item>
-                        </ion-col>
-                        <ion-col size="12">
-                        <ion-item>
-                            <ion-label position="stacked">Descripción</ion-label>
-                            <ion-textarea></ion-textarea>
-                        </ion-item>
-                        </ion-col>
-                        <ion-col size="12">
-                        <ion-item>
-                            <ion-label position="stacked">Precio</ion-label>
-                            <ion-input type="number"></ion-input>
+                            <ion-input label-placement="stacked" label="ID" disabled></ion-input>
                         </ion-item>
                         </ion-col>
 
                         <ion-col size="12">
                         <ion-item>
-                            <ion-label position="stacked">Imagen del Producto</ion-label>
-                            <input type="file" accept="image/*">
+                            <ion-select label-placement="stacked" label="Categoria" v-model="plato.categoria">
+                            <!-- Aquí puedes agregar opciones para la categoría -->
+                            <ion-select-option value="Comidas">Comidas</ion-select-option>
+                            <ion-select-option value="Bebidas">Bebidas</ion-select-option>
+                            <ion-select-option value="Postres">Postres</ion-select-option>
+                            <ion-select-option value="Complementos">Complementos</ion-select-option>
+                            </ion-select>
+                        </ion-item>
+                        </ion-col>
+
+                        <ion-col size="12">
+                        <ion-item>
+                            <ion-input type="text" label-placement="stacked" label="Titulo" v-model="plato.nombrePlato"></ion-input>
+                        </ion-item>
+                        </ion-col>
+
+                        <ion-col size="12">
+                        <ion-item>
+                            <ion-textarea label-placement="stacked" label="Descripcion (No añadido por ahora)"></ion-textarea>
+                        </ion-item>
+                        </ion-col>
+
+                        <ion-col size="12">
+                        <ion-item>
+                            <ion-input label-placement="stacked" label="Precio" type="number" v-model="plato.precio"></ion-input>
+                        </ion-item>
+                        </ion-col>
+
+                        <ion-col size="12">
+                        <ion-item>
+                            <ion-input label-placement="stacked" label="Imagen del producto" type="file" accept="image/*" @change="handleImageUpload"></ion-input>
                         </ion-item>
                         </ion-col>
                     </ion-row>
 
                     <ion-row>
                         <ion-col>
-                            <ion-button expand="full" color="success">Agregar</ion-button>
+                            <ion-button expand="full" color="success" @click="agregarProducto">Agregar</ion-button>
                         </ion-col>
                         <ion-col>
                             <ion-button expand="full" color="warning">Editar</ion-button>
@@ -88,21 +86,50 @@
 
 
 <script>
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonLabel, IonInput, IonTextarea, } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonLabel, IonInput, IonTextarea} from '@ionic/vue';
+
+import axios from 'axios';
+
 import {cart} from 'ionicons/icons';
 
 export default {
     name: 'InicioPage',
     components: {
-        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonLabel, IonInput, IonTextarea,
+        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonLabel, IonInput, IonTextarea
     },
     data() {
         return {
+            plato: {
+                nombrePlato: '',
+                categoria: '',
+                precio: '',
+                imagen: null
+                // imagen: 'https://ionicframework.com/docs/img/demos/card-media.png'
+            }
             
         }
     },
     methods: {
-        
+        handleImageUpload(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = () => {
+            this.plato.imagen = reader.result; // Guarda la imagen como una cadena base64
+            };
+
+            reader.readAsDataURL(file);
+        },
+        agregarProducto() {
+            axios.post(`http://${this.$store.state.ipLocal}/api/platos/store`, this.plato)
+            .then(response => {
+                console.log(response);
+                console.log("Se agrego correctamente: ", response.data);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+        }
     }
 }
 </script>

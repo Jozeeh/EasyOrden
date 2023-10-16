@@ -17,6 +17,16 @@
                         <ion-col class="ion-text-center">
                             <h2>Productos a preparar</h2>
                         </ion-col>
+
+                        <ion-col size="12">
+                            <ion-item>
+                                <ion-select label-placement="stacked" label="Categoria" v-model="categoriaEstadoPedido">
+                                    <ion-select-option value="Ordenado">Ordenado</ion-select-option>
+                                    <ion-select-option value="En preparación">En Preparación</ion-select-option>
+                                    <ion-select-option value="Entregado">Entregados</ion-select-option>
+                                </ion-select>
+                            </ion-item>
+                        </ion-col>
                     </ion-row>
 
                     <ion-row>
@@ -55,28 +65,26 @@
 
 
 <script>
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter } from '@ionic/vue';
-
-import { cart } from 'ionicons/icons';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem } from '@ionic/vue';
 
 import axios from 'axios';
 
 export default {
     name: 'InicioPage',
     components: {
-        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter
+        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem
     },
     data() {
         return {
             ipLocal: this.$store.state.ipLocal,
-
+            categoriaEstadoPedido: 'Ordenado',
             pedidos: {}
         }
     },
     methods: {
         // Obtenemos los pedidos que se han hecho con los detalles del plato
         obtenerPedidos() {
-            axios.get(`http://${this.ipLocal}/api/pedidos/select`)
+            axios.get(`http://${this.ipLocal}/api/pedidos/select/${this.categoriaEstadoPedido}`)
                 .then(response => {
                     this.pedidos = response.data.data
                     console.log(response.data.data);
@@ -89,6 +97,15 @@ export default {
     },
     mounted() {
         this.obtenerPedidos()
+    },
+    watch: {
+        //este metodo comprueba que la operacion sea diferente para volver hacer el calculo
+        //debe ser mismo nombre de la variable donde esta en return
+        categoriaEstadoPedido(nuevoValor, antiguoValor){
+            if(nuevoValor!=antiguoValor){
+                this.obtenerPedidos()
+            }
+        },
     }
 }
 </script>
