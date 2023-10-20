@@ -60,7 +60,7 @@ const appPages = [
   },
   {
     title: 'Registrarse',
-    url: '/folder/Outbox',
+    url: '/registrarse',
     iosIcon: personAdd,
     mdIcon: personAdd,
   },
@@ -103,7 +103,9 @@ const setSelectedIndex = (index) => {
 };
 </script>
 
+
 <style scoped>
+
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #c93e4f));
 }

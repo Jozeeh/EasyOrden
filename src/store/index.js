@@ -2,7 +2,7 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-    ipLocal: '192.168.0.13:8000',
+    ipLocal: '192.168.0.16:8000',
 
     //Array de la lista de comidas a pedir
     carrito: []

@@ -124,9 +124,9 @@ export default {
         }
     },
     methods: {
-        reiniciarCarrito(){
-            this.$store.dispatch('eliminarCarritoAccion')
-        },
+        // reiniciarCarrito(){
+        //     this.$store.dispatch('eliminarCarritoAccion')
+        // },
         mandarCocina(){
             this.pedido = {
                 detalles: this.carrito.map(producto => ({
@@ -140,7 +140,7 @@ export default {
                 console.log(response.data)
                 // this.showToast(true, 'Comida en proceso')
 
-                this.reiniciarCarrito()
+                this.$store.dispatch('eliminarCarritoAccion')
                 this.$router.push('/inicio')
             })
             .catch(error => console.error("OCURRIO UN ERROR:", error))

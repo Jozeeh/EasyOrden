@@ -5,6 +5,7 @@ import FacturasPage from '../views/pagos-views/FacturasPage.vue'
 import GestionarProductoPage from '../views/productos-views/GestionarProductoPage.vue'
 import PedidosPrepararPage from '../views/productos-views/PedidosPrepararPage.vue'
 import ProductosPage from '../views/categorias-views/ProductosPage.vue'
+import RegistroPage from '../views/usuarios/RegistroPage.vue'
 
 const routes = [
   {
@@ -34,6 +35,10 @@ const routes = [
   {
     path: '/pedidos-preparar',
     component: PedidosPrepararPage
+  },
+  {
+    path: '/registrarse',
+    component: RegistroPage
   },
   
   {
