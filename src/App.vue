@@ -1,7 +1,7 @@
 <template>
   <ion-app>
     <ion-split-pane content-id="main-content">
-      <ion-menu side="end" content-id="main-content" type="overlay">
+      <ion-menu side="end" content-id="main-content" type="overlay" :swipe-gesture="false">
         <ion-content>
           <ion-list id="inbox-list">
             <ion-list-header>Nombre Apellido</ion-list-header>
@@ -52,12 +52,12 @@ const appPages = [
     iosIcon: home,
     mdIcon: home,
   },
-  {
-    title: 'Iniciar sesión',
-    url: '/folder/Inbox',
-    iosIcon: person,
-    mdIcon: person,
-  },
+  // {
+  //   title: 'Iniciar sesión',
+  //   url: '/inicio-sesion',
+  //   iosIcon: person,
+  //   mdIcon: person,
+  // },
   {
     title: 'Registrarse',
     url: '/registrarse',

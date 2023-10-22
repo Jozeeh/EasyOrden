@@ -5,12 +5,21 @@ import FacturasPage from '../views/pagos-views/FacturasPage.vue'
 import GestionarProductoPage from '../views/productos-views/GestionarProductoPage.vue'
 import PedidosPrepararPage from '../views/productos-views/PedidosPrepararPage.vue'
 import ProductosPage from '../views/categorias-views/ProductosPage.vue'
+import InicioSesionPage from '../views/usuarios/InicioSesionPage.vue'
 import RegistroPage from '../views/usuarios/RegistroPage.vue'
 
 const routes = [
   {
     path: '',
     redirect: '/inicio'
+  },
+  {
+    path: '/inicio-sesion',
+    component: InicioSesionPage
+  },
+  {
+    path: '/registrarse',
+    component: RegistroPage
   },
   {
     path: '/inicio',
@@ -35,10 +44,6 @@ const routes = [
   {
     path: '/pedidos-preparar',
     component: PedidosPrepararPage
-  },
-  {
-    path: '/registrarse',
-    component: RegistroPage
   },
   
   {
