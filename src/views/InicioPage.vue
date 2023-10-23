@@ -93,6 +93,9 @@ export default {
             cart
         }
     },
+    created() {
+        
+    },
     mounted() {
         console.log(this.$store.state.estadoSesion)
     },
