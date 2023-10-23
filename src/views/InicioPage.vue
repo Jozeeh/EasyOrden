@@ -5,7 +5,7 @@
                 <ion-buttons slot="end">
                     <ion-menu-button color="light"></ion-menu-button>
                 </ion-buttons>
-                <ion-title>EasyOrden - Inicio</ion-title>
+                <img src="/EasyOrden-LogoBlancoSinFondo.png" width="200">
             </ion-toolbar>
         </ion-header>
 
@@ -13,13 +13,13 @@
             <ion-grid>
                 <ion-row>
                     <ion-col>
-                        <ion-card>
+                        <ion-card class="card-bienvenida">
                             <ion-card-content>
                                 <ion-title>Bienvenido al restaurante!</ion-title>
-                                <br>
+                                
                                 <ion-title>
-                                    <ion-note>Usuario: {{ this.$store.state.datosUsuario.name }}</ion-note> <br>
-                                    <ion-note>Correo: {{ this.$store.state.datosUsuario.email }}</ion-note>
+                                    <p>Usuario: {{ this.$store.state.datosUsuario.name }}</p> 
+                                    <p>Correo: {{ this.$store.state.datosUsuario.email }}</p>
                                 </ion-title> 
                             </ion-card-content>
                         </ion-card>
@@ -28,11 +28,11 @@
 
                 <ion-row>
                     <ion-col>
-                        <ion-card>
+                        <ion-card class="card-categorias">
                             <img alt="Silhouette of mountains"
-                                src="https://ionicframework.com/docs/img/demos/card-media.png" />
+                                src="/categorias.png" />
                             <ion-card-header>
-                                <ion-card-title>Productos</ion-card-title>
+                                <ion-card-title>Categorias</ion-card-title>
                             </ion-card-header>
 
                             <ion-card-content>
@@ -46,8 +46,8 @@
 
                 <ion-row>
                     <ion-col>
-                        <ion-card>
-                            <img alt="mesero" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+                        <ion-card class="card-categorias">
+                            <img alt="mesero" src="/mesero.png" />
                             <ion-card-header>
                                 <ion-card-title>¿Necesitas un mesero?</ion-card-title>
                                 <ion-card-subtitle>AYUDA!</ion-card-subtitle>
@@ -123,6 +123,23 @@ export default {
   bottom: 0;
   background-color: rgba(14, 14, 14, 0.5);
 }
+.card-bienvenida{
+    --background: none;
+    background-image: url('/fondousuario.png');
+    background-position: center center;
+    background-size: cover;
+    font-weight: bold;
+    border-radius: 10px;
+    color: black;
+}
+.card-categorias {
+    --ion-card-title-color: none;
+    color: black;
+    background-color: #fefbd6;
+}
+ion-card-title {
+    color: black;
+}
 
 /* ESTILOS HEADER */
 .bgcolor-header {
@@ -131,11 +148,15 @@ export default {
 }
 
 .footerPagar {
-    border-top: 5px solid #fc8e5b;
+    background-color: #242424;
+    /* border-top: 5px solid #fc8e5b; */
     padding: 10px;
 }
 
 ion-toolbar {
+    color: white;
+    --background: none;
+    background-color: #242424;
     text-align: center;
 }
 </style>

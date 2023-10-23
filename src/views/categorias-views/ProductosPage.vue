@@ -156,11 +156,15 @@ export default {
 }
 
 .footerPagar {
-    border-top: 5px solid #fc8e5b;
+    background-color: #242424;
+    /* border-top: 5px solid #fc8e5b; */
     padding: 10px;
 }
 
 ion-toolbar {
+    color: white;
+    --background: none;
+    background-color: #242424;
     text-align: center;
 }
 

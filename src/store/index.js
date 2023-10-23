@@ -37,10 +37,12 @@ export default createStore({
     },
     iniciarSesion(state){
       state.estadoSesion = true
+      state.carrito = []
     },
     cerrarSesion(state){
       state.estadoSesion = false
       state.datosUsuario = []
+      state.carrito = []
     }
         
   },
