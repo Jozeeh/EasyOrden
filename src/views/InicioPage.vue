@@ -9,56 +9,69 @@
             </ion-toolbar>
         </ion-header>
 
-        <ion-content>
-            <div class="contenedor">
-                
-                <ion-grid>
+        <ion-content class="fondo">
+            <ion-grid>
+                <ion-row>
+                    <ion-col>
+                        <ion-card>
+                            <ion-card-content>
+                                <ion-title>Bienvenido al restaurante!</ion-title>
+                                <br>
+                                <ion-title>
+                                    <ion-note>Usuario: {{ this.$store.state.datosUsuario.name }}</ion-note> <br>
+                                    <ion-note>Correo: {{ this.$store.state.datosUsuario.email }}</ion-note>
+                                </ion-title> 
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
 
-                    <ion-row>
-                        <ion-col>
-                            <ion-card>
-                                <img alt="Silhouette of mountains" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-                                <ion-card-header>
-                                    <ion-card-title>Productos</ion-card-title>
-                                </ion-card-header>
+                <ion-row>
+                    <ion-col>
+                        <ion-card>
+                            <img alt="Silhouette of mountains"
+                                src="https://ionicframework.com/docs/img/demos/card-media.png" />
+                            <ion-card-header>
+                                <ion-card-title>Productos</ion-card-title>
+                            </ion-card-header>
 
-                                <ion-card-content>
-                                    Puedes comprar comidas aquí.
-                                    <br>
-                                    <ion-button color="warning" router-link="/productos">Productos</ion-button>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
-                    </ion-row>
+                            <ion-card-content>
+                                Puedes comprar comidas aquí.
+                                <br>
+                                <ion-button color="warning" router-link="/productos">Productos</ion-button>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
 
-                    <ion-row>
-                        <ion-col>
-                            <ion-card>
-                                <img alt="mesero" src="https://ionicframework.com/docs/img/demos/card-media.png" />
-                                <ion-card-header>
-                                    <ion-card-title>¿Necesitas un mesero?</ion-card-title>
-                                    <ion-card-subtitle>AYUDA!</ion-card-subtitle>
-                                </ion-card-header>
+                <ion-row>
+                    <ion-col>
+                        <ion-card>
+                            <img alt="mesero" src="https://ionicframework.com/docs/img/demos/card-media.png" />
+                            <ion-card-header>
+                                <ion-card-title>¿Necesitas un mesero?</ion-card-title>
+                                <ion-card-subtitle>AYUDA!</ion-card-subtitle>
+                            </ion-card-header>
 
-                                <ion-card-content>
-                                    Si necesitas la ayuda de un mesero haz click aquí!
-                                    <br>
-                                    <ion-button color="tertiary" >Pedir mesero</ion-button>
-                                </ion-card-content>
-                            </ion-card>
-                        </ion-col>
-                    </ion-row>
-                </ion-grid>
-            </div>
+                            <ion-card-content>
+                                Si necesitas la ayuda de un mesero haz click aquí!
+                                <br>
+                                <ion-button color="tertiary">Pedir mesero</ion-button>
+                            </ion-card-content>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+            </ion-grid>
         </ion-content>
 
         <ion-footer class="footerPagar">
             <ion-toolbar router-link="/pagar">
-                    <b>Productos:</b> {{ this.$store.getters.getCantidadCarrito }}  <b>Total:</b> ${{ this.$store.getters.getTotalCarrito }} <br>
-                    <ion-button size="default">
-                        <ion-icon aria-hidden="true" slot="start" :ios="cart" :md="cart"></ion-icon>
-                        Pagar
-                    </ion-button>
+                <b>Productos:</b> {{ this.$store.getters.getCantidadCarrito }} <b>Total:</b> ${{
+                    this.$store.getters.getTotalCarrito }} <br>
+                <ion-button size="default">
+                    <ion-icon aria-hidden="true" slot="start" :ios="cart" :md="cart"></ion-icon>
+                    Pagar
+                </ion-button>
             </ion-toolbar>
         </ion-footer>
     </ion-page>
@@ -66,18 +79,26 @@
 
 
 <script>
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonThumbnail, IonNote } from '@ionic/vue';
 
-import {cart} from 'ionicons/icons';
+import { cart } from 'ionicons/icons';
 
 export default {
     name: 'InicioPage',
     components: {
-        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter
+        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonThumbnail, IonNote
     },
     data() {
         return {
             cart
+        }
+    },
+    mounted() {
+        console.log(this.$store.state.estadoSesion)
+    },
+    beforeCreate(){
+        if (this.$store.state.estadoSesion === false) {
+            this.$router.push('/inicio-sesion');
         }
     }
 }
@@ -85,16 +106,28 @@ export default {
 
 
 <style scoped>
+.fondo {
+  --background: none;
+  background-image: url('/FondoSesion.webp');
+
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+.fondo::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(14, 14, 14, 0.5);
+}
+
 /* ESTILOS HEADER */
 .bgcolor-header {
     --background: #c93e4f;
     --color: white;
-}
-
-.contenedor {
-    /* border: 1px solid black; */
-    width: 90%;
-    margin: 0 auto;
 }
 
 .footerPagar {

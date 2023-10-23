@@ -53,6 +53,14 @@
                     </ion-col>
                 </ion-row>
             </ion-grid>
+
+            <ion-alert
+                :is-open="alertaRegistro"
+                :header="datosAlertaRegistro.header"
+                :message="datosAlertaRegistro.message"
+                :buttons="datosAlertaRegistro.buttons"
+                @didDismiss="verAlertaRegistro(false)"
+            ></ion-alert>
         </ion-content>
 
         <ion-footer> 
@@ -64,13 +72,13 @@
 </template>
   
 <script>
-import { IonButton, IonCard, IonContent, IonHeader, IonInput, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonButtons, IonGrid, IonRow, IonCol, IonCardHeader, IonCardTitle, IonCardContent, IonBackButton, IonFooter } from '@ionic/vue';
+import { IonButton, IonCard, IonContent, IonHeader, IonInput, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonButtons, IonGrid, IonRow, IonCol, IonCardHeader, IonCardTitle, IonCardContent, IonBackButton, IonFooter, IonModal, IonLabel, IonIcon, IonAlert } from '@ionic/vue';
 import axios from 'axios'
 
 export default {
     name: "RegistroPage",
     components: {
-        IonButton, IonCard, IonContent, IonHeader, IonInput, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonButtons, IonGrid, IonRow, IonCol, IonCardHeader, IonCardTitle, IonCardContent, IonBackButton, IonFooter
+        IonButton, IonCard, IonContent, IonHeader, IonInput, IonItem, IonList, IonMenuButton, IonPage, IonTitle, IonToolbar, IonButtons, IonGrid, IonRow, IonCol, IonCardHeader, IonCardTitle, IonCardContent, IonBackButton, IonFooter, IonModal, IonLabel, IonIcon, IonAlert
     },
     data() {
         return {
@@ -82,18 +90,55 @@ export default {
                 telefono: "",
                 email: "",
                 password: "",
+            },
+            //Alerta de registro
+            alertaRegistro: false,
+            datosAlertaRegistro: {
+                header: "",
+                message: "",
+                buttons: []
             }
+            
+
         };
     },
     methods: {
+        verAlertaRegistro(state, mensajeEstado) {
+            if (mensajeEstado === "Registro exitoso!"){
+                this.datosAlertaRegistro.header = "Registro Exitoso!";
+                this.datosAlertaRegistro.message = "Ya puedes iniciar sesión";
+                this.datosAlertaRegistro.buttons = [{
+                    text: 'OK',
+                    role: 'confirm',
+                    handler: () => {
+                        this.$router.push('/inicio-sesion')
+                    },
+                }];
+                this.alertaRegistro = state;
+            } else{
+                this.datosAlertaRegistro.header = "Registro Fallido!";
+                this.datosAlertaRegistro.message = "Ingresa los datos correctamente!";
+                this.datosAlertaRegistro.buttons = [{
+                    text: 'OK',
+                    role: 'confirm',
+                    handler: () => {
+                        console.log('xd')
+                    },
+                }];
+                this.alertaRegistro = state;
+            }
+        },
         registrarUsuario() {
             // Aquí puedes agregar la lógica para registrar al usuario, por ejemplo, enviar los datos a tu servidor.
             // Puedes acceder a los datos del usuario a través de this.userData.
             axios.post(`http://${this.ipLocal}/api/registro/store`, this.userData)
                 .then(response => {
+                    this.verAlertaRegistro(true, "Registro exitoso!");
+                    this.userData = { name: "", dui: "", telefono: "", email: "", password: "", }
                     console.log(response)
                 })
                 .catch(error => {
+                    this.verAlertaRegistro(true, "Registro fallido!");
                     console.log(error)
                 })
         },

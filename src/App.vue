@@ -4,12 +4,11 @@
       <ion-menu side="end" content-id="main-content" type="overlay" :swipe-gesture="false">
         <ion-content>
           <ion-list id="inbox-list">
-            <ion-list-header>Nombre Apellido</ion-list-header>
-            <ion-note>invitado@app.com</ion-note>
-
-            <ion-list-header>Usuario</ion-list-header> <br>
-            <ion-menu-toggle :auto-hide="false" v-for="(p, i) in appPages" :key="i">
-              <ion-item @click="setSelectedIndex(i)" router-direction="root" :router-link="p.url" lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
+            <ion-list-header>Productos</ion-list-header> <br>
+            <ion-menu-toggle :auto-hide="false" v-for="(p, i) in productosPage" :key="i">
+              <ion-item @click="setSelectedIndex(i + appPages.length)" router-direction="root" :router-link="p.url"
+                lines="none" :detail="false" class="hydrated"
+                :class="{ selected: selectedIndex === i + appPages.length }">
                 <ion-icon aria-hidden="true" slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
@@ -17,15 +16,23 @@
           </ion-list>
 
           <ion-list id="inbox-list">
-            <ion-list-header>Productos</ion-list-header> <br>
-            <ion-menu-toggle :auto-hide="false" v-for="(p, i) in productosPage" :key="i">
-              <ion-item @click="setSelectedIndex(i + appPages.length)" router-direction="root" :router-link="p.url" lines="none" :detail="false" class="hydrated" :class="{ selected: selectedIndex === i + appPages.length }">
+            <ion-list-header>Cuenta</ion-list-header> <br>
+            <ion-menu-toggle :auto-hide="false" v-for="(p, i) in appPages" :key="i">
+              <ion-item @click="setSelectedIndex(i)" router-direction="root" :router-link="p.url" lines="none"
+                :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
                 <ion-icon aria-hidden="true" slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
                 <ion-label>{{ p.title }}</ion-label>
               </ion-item>
             </ion-menu-toggle>
-          </ion-list>
 
+            <!-- CERRAR SESION -->
+            <ion-menu-toggle :auto-hide="false">
+              <ion-item @click="cerrarSesion">
+                <ion-icon aria-hidden="true" slot="start" :icon="logOut"></ion-icon>
+                <ion-label>Cerrar Sesión</ion-label>
+              </ion-item>
+            </ion-menu-toggle>
+          </ion-list>
         </ion-content>
 
       </ion-menu>
@@ -40,30 +47,22 @@ import {
 } from '@ionic/vue';
 import { ref } from 'vue';
 import {
-  home, person, personAdd, settings, document, addCircle, restaurant
+  home, person, personAdd, settings, document, addCircle, restaurant, logOut
 } from 'ionicons/icons';
+
+import store from '@/store';
+import router from '@/router';
+
+// Método de logout
+const cerrarSesion = () => {
+  store.dispatch('cerrarSesionAccion');
+  localStorage.removeItem('tokenInicioSesion');
+  router.push('/inicio-sesion');
+};
 
 const selectedIndex = ref(0);
 
 const appPages = [
-  {
-    title: 'Inicio',
-    url: '/inicio',
-    iosIcon: home,
-    mdIcon: home,
-  },
-  // {
-  //   title: 'Iniciar sesión',
-  //   url: '/inicio-sesion',
-  //   iosIcon: person,
-  //   mdIcon: person,
-  // },
-  {
-    title: 'Registrarse',
-    url: '/registrarse',
-    iosIcon: personAdd,
-    mdIcon: personAdd,
-  },
   {
     title: 'Ajustes',
     url: '/folder/Favorites',
@@ -79,6 +78,12 @@ const appPages = [
 ];
 
 const productosPage = [
+  {
+    title: 'Inicio',
+    url: '/inicio',
+    iosIcon: home,
+    mdIcon: home,
+  },
   {
     title: 'Gestionar producto',
     url: '/gestionar-producto',
@@ -101,11 +106,11 @@ if (path !== undefined) {
 const setSelectedIndex = (index) => {
   selectedIndex.value = index;
 };
+
 </script>
 
 
 <style scoped>
-
 ion-menu ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #c93e4f));
 }
@@ -115,11 +120,13 @@ ion-menu.md ion-content {
   --padding-end: 8px;
   --padding-top: 20px;
   --padding-bottom: 20px;
-  
+
 }
-ion-list{
+
+ion-list {
   background-color: #c93e4f;
 }
+
 ion-menu.md ion-list {
   padding: 20px 0;
 }

@@ -13,10 +13,10 @@
                             </ion-card-header>
                             <ion-card-content>
                                 <ion-item>
-                                    <ion-input label-placement="floating" label="Correo" type="email"></ion-input>
+                                    <ion-input label-placement="floating" label="Correo" type="text" v-model="email"></ion-input>
                                 </ion-item>
                                 <ion-item>
-                                    <ion-input label-placement="floating" label="Contraseña" type="text"></ion-input>
+                                    <ion-input label-placement="floating" label="Contraseña" type="password" v-model="password"></ion-input>
                                 </ion-item>
 
                                 <br>
@@ -28,7 +28,7 @@
 
                 <ion-row>
                     <ion-col size="12">
-                        <ion-button expand="block" color="success">Iniciar Sesión</ion-button>
+                        <ion-button expand="block" color="success" @click="login()">Iniciar Sesión</ion-button>
                     </ion-col>
                     <ion-col size="12">
                         <ion-button expand="block" color="warning" @click="this.$router.push('/registrarse')">Registrarse</ion-button>
@@ -48,6 +48,8 @@
 
 <script>
 import {IonPage, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonThumbnail, IonFooter, IonToolbar, IonTitle, IonIcon } from '@ionic/vue';
+import axios from 'axios';
+
 export default {
     name: 'InicioSesionPage',
     components: {
@@ -55,8 +57,41 @@ export default {
     },
     data() {
         return {
-        
+            ipLocal: this.$store.state.ipLocal,
+            email: '',
+            password: ''
         };
+    },
+    methods: {
+        login() {
+            const userData = {
+                email: this.email,
+                password: this.password
+            };
+            axios.post(`http://${this.ipLocal}/api/users`, userData)
+                .then(response => {
+                    console.log(response);
+                    // Manejar la respuesta exitosa aquí
+                    const token = response.data.token; // Suponiendo que el token se devuelve en la respuesta
+
+                    // Almacena el token en el almacenamiento local o en una cookie
+                    localStorage.setItem('tokenInicioSesion', token);
+                    this.$store.dispatch('iniciarSesionAccion')
+                    this.$store.state.datosUsuario = response.data.data
+
+                    // Redirige y limpia inputs de inicio de sesion
+                    this.$router.push('/inicio')
+                    this.email = ''
+                    this.password = ''
+                })
+                .catch(error => {
+                    // Manejar errores de inicio de sesión aquí
+                    console.error(error);
+                });
+        }
+    },
+    mounted() {
+        console.log(this.$store.state.datosUsuario);
     }
 }
 </script>
@@ -81,7 +116,7 @@ ion-button {
 }
 .fondo-sesion {
   --background: none;
-  background-image: url('/FondoSesion.jfif');
+  background-image: url('/FondoSesion.webp');
 
   background-position: center center;
   background-repeat: no-repeat;

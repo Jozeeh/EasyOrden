@@ -3,6 +3,8 @@ import { createStore } from 'vuex';
 export default createStore({
   state: {
     ipLocal: '192.168.0.18:8000',
+    estadoSesion: false,
+    datosUsuario: [],
 
     //Array de la lista de comidas a pedir
     carrito: []
@@ -32,6 +34,13 @@ export default createStore({
     },
     eliminarCarrito(state){
       state.carrito = []
+    },
+    iniciarSesion(state){
+      state.estadoSesion = true
+    },
+    cerrarSesion(state){
+      state.estadoSesion = false
+      state.datosUsuario = []
     }
         
   },
@@ -42,6 +51,13 @@ export default createStore({
 
     eliminarCarritoAccion(context){
       context.commit('eliminarCarrito')
+    },
+
+    iniciarSesionAccion(context){
+      context.commit('iniciarSesion')
+    },
+    cerrarSesionAccion(context){
+      context.commit('cerrarSesion')
     }
 
   }
