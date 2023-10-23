@@ -98,8 +98,6 @@ export default {
                 message: "",
                 buttons: []
             }
-            
-
         };
     },
     methods: {
@@ -122,7 +120,7 @@ export default {
                     text: 'OK',
                     role: 'confirm',
                     handler: () => {
-                        console.log('xd')
+                        console.log('No se pudo iniciar sesión!')
                     },
                 }];
                 this.alertaRegistro = state;
@@ -179,7 +177,7 @@ ion-button {
 }
 .fondo-sesion {
   --background: none;
-  background-image: url('/FondoSesion.jfif');
+  background-image: url('/FondoSesion.webp');
 
   background-position: center center;
   background-repeat: no-repeat;

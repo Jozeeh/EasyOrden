@@ -18,6 +18,9 @@
                                 <ion-item>
                                     <ion-input label-placement="floating" label="Contraseña" type="password" v-model="password"></ion-input>
                                 </ion-item>
+                                <div v-if="datosErroneos===true" style="color: red; margin-top: 10px;">
+                                    Ingresa correctamente tus datos
+                                </div>
 
                                 <br>
                                 <a style="text-decoration: none;" @click="this.$router.push('/registrarse')">¿No tienes cuenta? Registrate aquí</a>
@@ -47,19 +50,20 @@
 
 
 <script>
-import {IonPage, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonThumbnail, IonFooter, IonToolbar, IonTitle, IonIcon } from '@ionic/vue';
+import {IonPage, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonThumbnail, IonFooter, IonToolbar, IonTitle, IonIcon, IonAlert } from '@ionic/vue';
 import axios from 'axios';
 
 export default {
     name: 'InicioSesionPage',
     components: {
-        IonPage, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonThumbnail, IonFooter, IonToolbar, IonTitle, IonIcon
+        IonPage, IonContent, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardContent, IonItem, IonLabel, IonInput, IonButton, IonThumbnail, IonFooter, IonToolbar, IonTitle, IonIcon, IonAlert
     },
     data() {
         return {
             ipLocal: this.$store.state.ipLocal,
             email: '',
-            password: ''
+            password: '',
+            datosErroneos: false
         };
     },
     methods: {
@@ -86,6 +90,7 @@ export default {
                 })
                 .catch(error => {
                     // Manejar errores de inicio de sesión aquí
+                    this.datosErroneos = true
                     console.error(error);
                 });
         }
