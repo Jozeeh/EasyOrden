@@ -11,7 +11,7 @@ import RegistroPage from '../views/usuarios/RegistroPage.vue'
 const routes = [
   {
     path: '',
-    redirect: '/inicio'
+    redirect: '/inicio-sesion'
   },
   {
     path: '/inicio-sesion',

@@ -135,7 +135,7 @@ export default {
 .card-categorias {
     --ion-card-title-color: none;
     color: black;
-    background-color: #fefbd6;
+    background-color: white;
 }
 ion-card-title {
     color: black;

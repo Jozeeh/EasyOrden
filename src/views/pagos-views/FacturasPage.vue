@@ -50,7 +50,7 @@
                                             <ion-card-title>Detalles de Producto</ion-card-title>
                                         </ion-card-header>
                                         <ion-card-content>
-                                            <ion-row v-for="(producto, i) in carrito" :key="i">
+                                            <ion-row v-for="(producto, i) in this.$store.getters.getCarrito" :key="i">
                                                 <ion-col>
                                                     <ion-label>ID:{{ producto.idPlato }} {{ producto.nombrePlato }} ${{ producto.precio }}</ion-label>
                                                 </ion-col>
@@ -89,7 +89,7 @@
 
                                 <ion-row class="ion-text-center">
                         <ion-col>
-                                <ion-button color="danger" @click="mandarCocina">Volver al inicio</ion-button>
+                                <ion-button color="danger" @click="mandarCocina()">Volver al inicio</ion-button>
                         </ion-col>
                     </ion-row>
                             </ion-grid>
@@ -119,31 +119,31 @@ export default {
         return {
             cart,
             ipLocal: this.$store.state.ipLocal,
-            carrito: this.$store.getters.getCarrito,
-            pedido: {}
+            carrito: {},
+            pedido: {},
+            idUser: this.$store.state.datosUsuario.id
         }
     },
     methods: {
-        // reiniciarCarrito(){
-        //     this.$store.dispatch('eliminarCarritoAccion')
-        // },
         mandarCocina(){
             this.pedido = {
-                detalles: this.carrito.map(producto => ({
+                detalles: this.$store.getters.getCarrito.map(producto => ({
                     fkIdPlato: producto.idPlato,
-                    estadoPedido: 'Ordenado'
+                    fkIdUser: producto.idUsuario,
+                    estadoPedido: 'Ordenado',
+                    numMesa: 'Mesa 1'
                 }))
             };
 
             axios.post(`http://${this.ipLocal}/api/pedidos/store`, this.pedido)
             .then(response => {
+                // this.pedido = {}
                 console.log(response.data)
                 // this.showToast(true, 'Comida en proceso')
-
-                this.$store.dispatch('eliminarCarritoAccion')
                 this.$router.push('/inicio')
+                this.$store.dispatch('eliminarCarritoAccion')
             })
-            .catch(error => console.error("OCURRIO UN ERROR:", error))
+            .catch(error => console.error("OCURRIO UN ERROR:", error), console.log(this.pedido))
         }
     },
     mounted() {
