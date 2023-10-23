@@ -74,7 +74,6 @@ export default {
             };
             axios.post(`http://${this.ipLocal}/api/users`, userData)
                 .then(response => {
-                    console.log(response);
                     // Manejar la respuesta exitosa aquí
                     const token = response.data.token; // Suponiendo que el token se devuelve en la respuesta
 
@@ -87,6 +86,9 @@ export default {
                     this.$router.push('/inicio')
                     this.email = ''
                     this.password = ''
+                    this.datosErroneos = false
+
+                    console.log(response);
                 })
                 .catch(error => {
                     // Manejar errores de inicio de sesión aquí
