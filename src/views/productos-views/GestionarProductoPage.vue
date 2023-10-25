@@ -15,8 +15,10 @@
                     <ion-col size="12" class="ion-text-center">
                         <ion-card style="--background: white;">
                             <img src="/gestion-productos.png">
+                            <ion-card-header>
+                                <ion-card-title style="color: black;">Gestionar Productos</ion-card-title>
+                            </ion-card-header>
                             <ion-card-content>
-                                <h1 style="color: black;">Gestionar Productos</h1>
                                 <ion-button fill="solid" color="success" @click="modalAgregar = true">
                                     <ion-icon slot="start" :icon="addCircleSharp"></ion-icon>
                                     Agregar producto

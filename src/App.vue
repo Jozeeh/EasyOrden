@@ -112,7 +112,9 @@ const setSelectedIndex = (index) => {
 
 <style scoped>
 ion-menu ion-content {
-  --background: var(--ion-item-background, var(--ion-background-color, #c93e4f));
+  /* --background: var(--ion-item-background, var(--ion-background-color, #c93e4f)); */
+  --background: none;
+  background-color: #c93e4f;
 }
 
 ion-menu.md ion-content {
@@ -124,6 +126,7 @@ ion-menu.md ion-content {
 }
 
 ion-list {
+  --background: none;
   background-color: #c93e4f;
 }
 
@@ -166,7 +169,8 @@ ion-menu.md ion-item {
   --padding-start: 10px;
   --padding-end: 10px;
   border-radius: 4px;
-  --background: #c93e4f;
+  --background: none;
+  background-color: #c93e4f;
 }
 
 ion-menu.md ion-item.selected {
