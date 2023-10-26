@@ -81,6 +81,7 @@ export default {
             text1: '',
             text2: '',
             qrCodeUrl: null,
+            ipLocal: this.$store.state.ipLocal,
         };
     },
     methods: {

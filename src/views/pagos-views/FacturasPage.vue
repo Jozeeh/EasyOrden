@@ -115,9 +115,9 @@ export default {
     data() {
         return {
             cart,
-            carrito: this.$store.getters.getCarrito
+            carrito: this.$store.getters.getCarrito,
 
-            // ipLocal: this.$store.state.ipLocal,
+            ipLocal: this.$store.state.ipLocal,
             // carrito: {},
             // pedido: {},
             // idUser: this.$store.state.datosUsuario.id

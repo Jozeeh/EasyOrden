@@ -109,7 +109,7 @@ export default {
             this.noHayNotificaciones = false;
             this.cargandoNotificaciones = true;
 
-            axios.get(`http://${this.ipLocal}/api/mostrarMesero/Alerta`)
+            axios.get(`${this.ipLocal}/mostrarMesero/Alerta`)
                 .then(response => {
                     this.notificaciones = response.data.data;
                     this.cargandoNotificaciones = false;
@@ -125,7 +125,7 @@ export default {
         // Actualizar estado de notificacion
         actualizarNotificacion(idPedirMesero) {
             this.loadingNotificacion = true
-            axios.put(`http://${this.ipLocal}/api/pedirmesero/notificar/${idPedirMesero}`, { estado: 'En camino'})
+            axios.put(`${this.ipLocal}/pedirmesero/notificar/${idPedirMesero}`, { estado: 'En camino'})
                 .then(response => {
                     this.loadingNotificacion = false;
                     this.obtenerNotificacionesMesero();

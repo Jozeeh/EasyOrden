@@ -284,6 +284,7 @@ export default {
     },
     data() {
         return {
+            ipLocal: this.$store.state.ipLocal,
             eye, create, trash, addCircleSharp, caretDownCircle, arrowDownOutline,
             categoria: 'Comidas',
             listPlatos: {},
@@ -339,7 +340,7 @@ export default {
         obtenerProductos() {
             this.botonCategoria = true
             this.cargandoProductos = true
-            axios.get(`http://${this.$store.state.ipLocal}/api/platos/select/${this.categoria}`)
+            axios.get(`${this.ipLocal}/platos/select/${this.categoria}`)
                 .then(response => {
                     this.botonCategoria = false
                     this.cargandoProductos = false
@@ -364,7 +365,7 @@ export default {
         agregarProducto() {
             this.alertaNoPuedeAgregar = false
             this.cargandoAgregacion = true
-            axios.post(`http://${this.$store.state.ipLocal}/api/platos/store`, this.plato)
+            axios.post(`${this.ipLocal}/platos/store`, this.plato)
                 .then(response => {
                     console.log(response);
                     this.cargandoAgregacion = false
@@ -382,7 +383,7 @@ export default {
             this.modalEditar = true
             // this.btnCerrarEditar = true
             this.cargandoEditar = true
-            axios.get(`http://${this.$store.state.ipLocal}/api/platos/find/${idPlato}`)
+            axios.get(`${this.ipLocal}/platos/find/${idPlato}`)
                 .then(response => {
                     this.editarPlato.idPlato = response.data.data.idPlato;
                     this.editarPlato.nombrePlato = response.data.data.nombrePlato;
@@ -401,7 +402,7 @@ export default {
         editarPlatoObtenido(id) {
             this.cargandoEditacion = true
             if (this.editarPlato.imagen) {
-                axios.put(`http://${this.$store.state.ipLocal}/api/platos/update/${id}`, this.editarPlato)
+                axios.put(`${this.ipLocal}/platos/update/${id}`, this.editarPlato)
                     .then(response => {
                         console.log(response);
                         this.modalEditar = false;

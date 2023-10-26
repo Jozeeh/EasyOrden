@@ -147,17 +147,17 @@ export default {
             this.modalRegister = true
             // Aquí puedes agregar la lógica para registrar al usuario, por ejemplo, enviar los datos a tu servidor.
             // Puedes acceder a los datos del usuario a través de this.userData.
-            axios.post(`http://${this.ipLocal}/api/registro/store`, this.userData)
+            axios.post(`${this.ipLocal}/registro/store`, this.userData)
                 .then(response => {
-                    this.verAlertaRegistro(true, "Registro exitoso!");
                     this.modalRegister = false
+                    this.verAlertaRegistro(true, "Registro exitoso!");
                     //Reiniciamos campos al registrar
                     this.userData = { name: "", dui: "", telefono: "", email: "", password: "", }
                     console.log(response)
                 })
                 .catch(error => {
-                    this.verAlertaRegistro(true, "Registro fallido!");
                     this.modalRegister = false
+                    this.verAlertaRegistro(true, "Registro fallido!");
                     console.log(error)
                 })
         },

@@ -105,7 +105,7 @@ export default {
                 email: this.email,
                 password: this.password
             };
-            axios.post(`http://${this.ipLocal}/api/users`, userData)
+            axios.post(`${this.ipLocal}/api/users`, userData)
                 .then(response => {
                     // Manejar la respuesta exitosa aquí
                     const datosUsuario = response.data.data; // Suponiendo que el token se devuelve en la respuesta

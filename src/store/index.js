@@ -2,8 +2,8 @@ import { createStore } from 'vuex';
 
 export default createStore({
   state: {
-    ipLocal: '192.168.0.18:8000',
-    // ipLocal: 'api2.query.lat/public',
+    // ipLocal: 'http://192.168.0.18:8000/api',
+    ipLocal: 'https://api2.query.lat/public/api',
     estadoSesion: false,
     datosUsuario: [],
 

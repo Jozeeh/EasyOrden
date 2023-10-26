@@ -198,7 +198,7 @@ export default {
         obtenerPlatos() {
             this.botonCategoria = true
             this.cargandoProductos = true
-            axios.get(`http://${this.ipLocal}/api/platos/select/${this.categoria}`)
+            axios.get(`${this.ipLocal}/platos/select/${this.categoria}`)
                 .then(response => {
                     this.cargandoProductos = false
                     this.botonCategoria = false

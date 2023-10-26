@@ -109,7 +109,7 @@ export default {
     methods: {
         obtenerPedidos() {
             this.cargandoProductos = true
-            axios.get(`http://${this.ipLocal}/api/pedidos/select/`)
+            axios.get(`${this.ipLocal}/pedidos/select/`)
                 .then(response => {
                     this.cargandoProductos = false
                     this.pedidos2 = response.data.data
@@ -122,7 +122,7 @@ export default {
         },
         // Obtenemos los pedidos que se han hecho con los detalles del plato
         obtenerPedidosCategoria() {
-            axios.get(`http://${this.ipLocal}/api/pedidos/select/${this.categoriaEstadoPedido}`)
+            axios.get(`${this.ipLocal}/pedidos/select/${this.categoriaEstadoPedido}`)
                 .then(response => {
                     this.pedidos = response.data.data
                     console.log(response.data.data);
@@ -145,7 +145,7 @@ export default {
                 estadoPedido: nuevoEstado
             };
 
-            axios.put(`http://${this.ipLocal}/api/pedidos/update/${idPedido}`, data)
+            axios.put(`${this.ipLocal}/pedidos/update/${idPedido}`, data)
                 .then(response => {
                     console.log(response.data.data);
                     this.obtenerPedidos()

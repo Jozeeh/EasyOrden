@@ -172,7 +172,7 @@ export default {
                 }))
             };
 
-            axios.post(`http://${this.ipLocal}/api/pedidos/store`, this.pedido)
+            axios.post(`${this.ipLocal}/pedidos/store`, this.pedido)
                 .then(response => {
                     this.cargandoConfirmarCompra = false
                     this.verAlertaCarrito(true, "Compra exitosa!");
