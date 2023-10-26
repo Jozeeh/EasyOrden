@@ -15,5 +15,6 @@ Dependencias a instalar, pasos:
   cd /ubicacion-del-proyecto
   npm install
   npm install @ionic/storage
+  npm install qrcode-generator
   npm install jspdf
 ```
