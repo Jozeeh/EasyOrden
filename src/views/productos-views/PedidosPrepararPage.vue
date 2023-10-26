@@ -109,7 +109,7 @@ export default {
     methods: {
         obtenerPedidos() {
             this.cargandoProductos = true
-            axios.get(`${this.ipLocal}/pedidos/select/`)
+            axios.get(`${this.ipLocal}/pedidos/select`)
                 .then(response => {
                     this.cargandoProductos = false
                     this.pedidos2 = response.data.data
@@ -201,11 +201,11 @@ export default {
     watch: {
         //este metodo comprueba que la operacion sea diferente para volver hacer el calculo
         //debe ser mismo nombre de la variable donde esta en return
-        categoriaEstadoPedido(nuevoValor, antiguoValor) {
-            if (nuevoValor != antiguoValor) {
-                this.obtenerPedidosCategoria()
-            }
-        },
+        // categoriaEstadoPedido(nuevoValor, antiguoValor) {
+        //     if (nuevoValor != antiguoValor) {
+        //         this.obtenerPedidosCategoria()
+        //     }
+        // },
     }
 }
 </script>
