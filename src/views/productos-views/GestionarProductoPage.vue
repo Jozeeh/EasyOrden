@@ -122,7 +122,7 @@
             <ion-modal :is-open="modalAgregar">
                 <ion-header>
                     <ion-toolbar class="bgcolor-header">
-                        <ion-title>Editar producto</ion-title>
+                        <ion-title>Agregar producto</ion-title>
                         <ion-buttons slot="end">
                             <ion-button @click="modalAgregar = false">Cerrar</ion-button>
                         </ion-buttons>
@@ -166,13 +166,13 @@
                         </ion-col>
 
                         <ion-col size="12">
-                            <ion-input type="file" accept="image/*" @change="handleImageUpload"></ion-input>
+                            <ion-input v-model=plato.imagen type="file" accept="image/*" @change="handleImageUpload"></ion-input>
                         </ion-col>
                     </ion-row>
 
                     <ion-row>
                         <ion-col>
-                            <ion-button expand="full" color="success" @click="agregarProducto">Agregar</ion-button>
+                            <ion-button expand="full" color="success" @click="agregarProducto()">Agregar</ion-button>
                         </ion-col>
                     </ion-row>
                 </ion-content>
@@ -356,8 +356,6 @@ export default {
 
             reader.onload = () => {
                 this.plato.imagen = reader.result; // Guarda la imagen como una cadena base64
-            };
-            reader.onload = () => {
                 this.editarPlato.imagen = reader.result; // Guarda la imagen como una cadena base64
             };
 
@@ -371,6 +369,7 @@ export default {
                     console.log(response);
                     this.cargandoAgregacion = false
                     this.modalAgregar = false;
+                    this.plato = {nombrePlato: '', categoria: 'Comidas', precio: '', imagen: null},
                     this.obtenerProductos();
                 })
                 .catch(error => {
@@ -407,6 +406,7 @@ export default {
                         console.log(response);
                         this.modalEditar = false;
                         this.cargandoEditacion = false;
+                        // this.obtenerProductos()
                         window.location.reload(); // Recargar la página
                     })
                     .catch(error => {
