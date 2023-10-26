@@ -79,31 +79,61 @@
 
 
 <script>
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonThumbnail, IonNote } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonThumbnail, IonNote, IonAlert, IonModal, IonList, IonLabel } from '@ionic/vue';
 
 import { cart } from 'ionicons/icons';
 
 export default {
     name: 'InicioPage',
     components: {
-        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonThumbnail, IonNote
+        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonThumbnail, IonNote, IonAlert, IonModal, IonList, IonLabel
+    },
+    methods: {
+        // Obtenemos datos del usuario con Ionic/Storage
+        obtenerDatosUsuario() {
+            try {
+                // Usa la función get para recuperar los datos del usuario por su clave
+                this.$storage.get('tokenInicioSesion')
+                .then(userData => {
+                    if (userData) {
+                        // userData contiene los datos del usuario
+                        console.log('Datos del usuario:', userData);
+                        this.$store.state.datosUsuario = userData;
+                    } else {
+                        console.log('No se encontraron datos de usuario.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al recuperar datos del usuario:', error);
+                });
+            } catch (error) {
+                console.error('Error al recuperar datos del usuario:', error);
+            }
+        }
     },
     data() {
         return {
-            cart
+            cart,
+
         }
-    },
-    created() {
-        
-    },
-    mounted() {
-        console.log(this.$store.state.estadoSesion)
     },
     beforeCreate(){
-        if (this.$store.state.estadoSesion === false) {
-            this.$router.push('/inicio-sesion');
-        }
-    }
+        //Verificar si ya tenemos una sesión iniciada
+        this.$storage.get('tokenInicioSesion')
+            .then(token => {
+                if (!token) {
+                    //Si no tenemos sesión iniciada
+                    console.log('Inicia sesión o registrate!')
+                    this.$router.push('/inicio-sesion')
+                } else {
+                    // Si se encuentra un token, obtiene los datos del usuario
+                    this.obtenerDatosUsuario();
+                }
+            })
+            .catch(error => {
+                console.error('Error al verificar la sesión:', error);
+            });
+    },
 }
 </script>
 

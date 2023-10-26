@@ -43,21 +43,29 @@
 
 <script setup>
 import {
-  IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane
+  IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane, IonModal, IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonSelect, IonSelectOption, IonFooter, IonThumbnail
 } from '@ionic/vue';
-import { ref } from 'vue';
+import { ref, onMounted, onUpdated } from 'vue';
 import {
-  home, person, personAdd, settings, document, addCircle, restaurant, logOut
+  home, person, personAdd, settings, document, addCircle, restaurant, logOut, qrCode
 } from 'ionicons/icons';
 
 import store from '@/store';
 import router from '@/router';
 
-// Método de logout
-const cerrarSesion = () => {
-  store.dispatch('cerrarSesionAccion');
-  localStorage.removeItem('tokenInicioSesion');
-  router.push('/inicio-sesion');
+// Importamos ionic/storage para cerrar sesión
+import { Storage } from '@ionic/storage';
+
+// Configuración de ionic/storage
+const storage = new Storage();
+  storage.create().then(storageInstance => {
+});
+
+// Cerrar sesión con ionic/storage
+const cerrarSesion = async () => {
+  await storage.remove('tokenInicioSesion');
+  store.state.datosUsuario = [];
+  router.push('/inicio-sesion')
 };
 
 const selectedIndex = ref(0);
@@ -95,6 +103,12 @@ const productosPage = [
     url: '/pedidos-preparar',
     iosIcon: restaurant,
     mdIcon: restaurant,
+  },
+  {
+    title: 'Generar QR',
+    url: '/generador-qr',
+    iosIcon: qrCode,
+    mdIcon: qrCode,
   },
 ];
 

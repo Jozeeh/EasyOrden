@@ -146,7 +146,45 @@ export default {
                 .catch(error => {
                     console.error('OCURRIO UN ERROR: ', error);
                 })
+        },
+        // Obtenemos datos del usuario con Ionic/Storage
+        obtenerDatosUsuario() {
+            try {
+                // Usa la función get para recuperar los datos del usuario por su clave
+                this.$storage.get('tokenInicioSesion')
+                .then(userData => {
+                    if (userData) {
+                        // userData contiene los datos del usuario
+                        console.log('Datos del usuario:', userData);
+                        this.$store.state.datosUsuario = userData;
+                    } else {
+                        console.log('No se encontraron datos de usuario.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al recuperar datos del usuario:', error);
+                });
+            } catch (error) {
+                console.error('Error al recuperar datos del usuario:', error);
+            }
         }
+    },
+    beforeCreate(){
+        //Verificar si ya tenemos una sesión iniciada
+        this.$storage.get('tokenInicioSesion')
+            .then(token => {
+                if (!token) {
+                    //Si no tenemos sesión iniciada
+                    console.log('Inicia sesión o registrate!')
+                    this.$router.push('/inicio-sesion')
+                } else {
+                    // Si se encuentra un token, obtiene los datos del usuario
+                    this.obtenerDatosUsuario();
+                }
+            })
+            .catch(error => {
+                console.error('Error al verificar la sesión:', error);
+            });
     },
     mounted() {
         this.obtenerPedidos()

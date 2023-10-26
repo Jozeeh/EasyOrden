@@ -32,6 +32,9 @@ export default createStore({
       console.log(nuevoProducto)
       state.carrito.push(nuevoProducto)
     },
+    eliminarUnProducto(state, index){
+      state.carrito.splice(index, 1)
+    },
     eliminarCarrito(state){
       state.carrito = []
     },
@@ -53,6 +56,10 @@ export default createStore({
 
     eliminarCarritoAccion(context){
       context.commit('eliminarCarrito')
+    },
+
+    eliminarUnProductoAccion(context, index){
+      context.commit('eliminarUnProducto', index)
     },
 
     iniciarSesionAccion(context){

@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from '@ionic/vue-router';
+import GenerarQR from '../views/generador-views/GenerarQRPage.vue'
 import InicioPage from '../views/InicioPage.vue'
 import PagoPage from '../views/pagos-views/PagoPage.vue'
 import FacturasPage from '../views/pagos-views/FacturasPage.vue'
@@ -12,6 +13,10 @@ const routes = [
   {
     path: '',
     redirect: '/inicio-sesion'
+  },
+  {
+    path: '/generador-qr',
+    component: GenerarQR
   },
   {
     path: '/inicio-sesion',

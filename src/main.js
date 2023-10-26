@@ -26,6 +26,9 @@ import '@ionic/vue/css/display.css';
 /* Theme variables */
 import './theme/variables.css';
 
+// Importa IonicStorage
+import { Storage } from '@ionic/storage';
+
 const app = createApp(App)
   .use(IonicVue)
   .use(router)
@@ -33,6 +36,12 @@ const app = createApp(App)
   //VUEX
   .use(store);
   
+// Crea el almacenamiento y asigna a la propiedad global
+const storage = new Storage();
+storage.create().then(storageInstance => {
+  app.config.globalProperties.$storage = storageInstance;
+});
+
 router.isReady().then(() => {
   app.mount('#app');
 });

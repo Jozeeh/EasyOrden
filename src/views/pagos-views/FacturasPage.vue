@@ -2,13 +2,13 @@
     <ion-page>
         <ion-header :translucent="true">
             <ion-toolbar class="bgcolor-header">
-                <ion-buttons slot="start">
+                <!-- <ion-buttons slot="start">
                     <ion-back-button text="Atrás"></ion-back-button>
-                </ion-buttons>
+                </ion-buttons> -->
 
-                <ion-buttons slot="end">
+                <!-- <ion-buttons slot="end">
                     <ion-menu-button color="light"></ion-menu-button>
-                </ion-buttons>
+                </ion-buttons> -->
                 <ion-title class="ion-text-center">Factura</ion-title>
             </ion-toolbar>
         </ion-header>
@@ -128,32 +128,55 @@ export default {
         volverInicio(){
             this.$store.dispatch('eliminarCarritoAccion')
             this.$router.push('/inicio')
+        },
+        // Obtenemos datos del usuario con Ionic/Storage
+        obtenerDatosUsuario() {
+            try {
+                // Usa la función get para recuperar los datos del usuario por su clave
+                this.$storage.get('tokenInicioSesion')
+                .then(userData => {
+                    if (userData) {
+                        // userData contiene los datos del usuario
+                        console.log('Datos del usuario:', userData);
+                        this.$store.state.datosUsuario = userData;
+                    } else {
+                        console.log('No se encontraron datos de usuario.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error al recuperar datos del usuario:', error);
+                });
+            } catch (error) {
+                console.error('Error al recuperar datos del usuario:', error);
+            }
         }
-
-        // mandarCocina() {
-        //     this.pedido = {
-        //         detalles: this.$store.getters.getCarrito.map(producto => ({
-        //             fkIdPlato: producto.idPlato,
-        //             fkIdUser: producto.idUsuario,
-        //             estadoPedido: 'Ordenado',
-        //             numMesa: 'Mesa 1'
-        //         }))
-        //     };
-
-        //     axios.post(`http://${this.ipLocal}/api/pedidos/store`, this.pedido)
-        //         .then(response => {
-        //             // this.pedido = {}
-        //             console.log(response.data)
-        //             // this.showToast(true, 'Comida en proceso')
-        //             this.$router.push('/inicio')
-        //             this.$store.dispatch('eliminarCarritoAccion')
-        //         })
-        //         .catch(error => console.error("OCURRIO UN ERROR:", error), console.log(this.pedido))
-        // }
+    },
+    beforeCreate(){
+        //Verificar si ya tenemos una sesión iniciada
+        this.$storage.get('tokenInicioSesion')
+            .then(token => {
+                if (!token) {
+                    //Si no tenemos sesión iniciada
+                    console.log('Inicia sesión o registrate!')
+                    this.$router.push('/inicio-sesion')
+                } else {
+                    // Si se encuentra un token, obtiene los datos del usuario
+                    this.obtenerDatosUsuario();
+                }
+            })
+            .catch(error => {
+                console.error('Error al verificar la sesión:', error);
+            });
+    },
+    created() {
+        
     },
     mounted() {
 
-    }
+    },
+    beforeDestroy() {
+        
+    },
 }
 </script>
 

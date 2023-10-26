@@ -1,5 +1,10 @@
-Ver el proyecto de manera local
+#Ver el proyecto de manera local:
 ionic serve --host=0.0.0.0 --port=8100
 
-Para laravel
+#Para laravel:
 php artisan serve --host=ip_de_la_pc (sin poner puerto)
+
+#Librerias instaladas:
+npm install @ionic/storage
+npm i qrcode-generator
+npm install jspdf
