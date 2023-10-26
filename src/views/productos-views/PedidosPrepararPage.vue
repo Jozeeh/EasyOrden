@@ -20,22 +20,27 @@
                             </ion-card-header>
                         </ion-card>
                     </ion-col>
-
-                    <!-- <ion-col size="12">
-                        <ion-item>
-                            <ion-select label-placement="stacked" label="Categoria" v-model="categoriaEstadoPedido">
-                                <ion-select-option value="Ordenado">Ordenado</ion-select-option>
-                                <ion-select-option value="En preparación">En Preparación</ion-select-option>
-                                <ion-select-option value="Entregado">Entregados</ion-select-option>
-                            </ion-select>
-                        </ion-item>
-                    </ion-col> -->
                 </ion-row>
 
-                <ion-row v-for="(pedidoClientes, i) in pedidos2" :key="i">
+                <ion-row v-if="cargandoProductos == true">
+                    <ion-col>
+                        <ion-card style="background-color: white;">
+                            <ion-card-header>
+                                <ion-card-title style="color: black;" class="ion-text-center">Cargando productos...</ion-card-title>
+                            </ion-card-header>
+
+                            <div
+                                style="height: 100%; display: flex; justify-content: center;align-items: center; padding-bottom: 15px;">
+                                <ion-spinner name="circular" style="--color: black;"></ion-spinner>
+                            </div>
+                        </ion-card>
+                    </ion-col>
+                </ion-row>
+
+                <ion-row v-else>
                     <ion-col>
                         <!-- ION ACORDEON -->
-                        <ion-accordion-group>
+                        <ion-accordion-group v-for="(pedidoClientes, i) in pedidos2" :key="i">
                             <ion-accordion value="first" :toggle-icon="caretDownCircle" toggle-icon-slot="end"
                                 class="accordion-icon item-description">
                                 <ion-item slot="header" class="item-producto">
@@ -83,14 +88,14 @@
 
 
 <script>
-import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonAccordionGroup, IonAccordion, IonLabel, IonThumbnail } from '@ionic/vue';
+import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonAccordionGroup, IonAccordion, IonLabel, IonThumbnail, IonSpinner } from '@ionic/vue';
 
 import axios from 'axios';
 
 export default {
     name: 'InicioPage',
     components: {
-        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonAccordionGroup, IonAccordion, IonLabel, IonThumbnail
+        IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, IonToolbar, IonGrid, IonRow, IonCol, IonCard, IonCardHeader, IonCardTitle, IonCardSubtitle, IonCardContent, IonIcon, IonButton, IonSelect, IonSelectOption, IonFooter, IonItem, IonAccordionGroup, IonAccordion, IonLabel, IonThumbnail, IonSpinner
     },
     data() {
         return {
@@ -98,12 +103,15 @@ export default {
             categoriaEstadoPedido: 'Ordenado',
             pedidos: {},
             pedidos2: {},
+            cargandoProductos: false
         }
     },
     methods: {
         obtenerPedidos() {
+            this.cargandoProductos = true
             axios.get(`http://${this.ipLocal}/api/pedidos/select/`)
                 .then(response => {
+                    this.cargandoProductos = false
                     this.pedidos2 = response.data.data
                     console.log(response.data.data);
                 })

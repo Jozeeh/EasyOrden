@@ -31,7 +31,7 @@
                                 </ion-item>
 
                                 <ion-item>
-                                    <ion-select class="selectModalStyle" label="Categoria" label-placement="floating" v-model="text2" placeholder="Categorias...">
+                                    <ion-select class="selectModalStyle" label="Mesa" label-placement="floating" v-model="text2" placeholder="Categorias...">
                                         <ion-select-option value="Mesa 1">Mesa 1</ion-select-option>
                                         <ion-select-option value="Mesa 2">Mesa 2</ion-select-option>
                                         <ion-select-option value="Mesa 3">Mesa 3</ion-select-option>
