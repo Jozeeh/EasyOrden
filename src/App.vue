@@ -47,7 +47,7 @@ import {
 } from '@ionic/vue';
 import { ref, onMounted, onUpdated } from 'vue';
 import {
-  home, person, personAdd, settings, document, addCircle, restaurant, logOut, qrCode
+  home, person, personAdd, settings, document, addCircle, restaurant, logOut, qrCode, notifications
 } from 'ionicons/icons';
 
 import store from '@/store';
@@ -71,15 +71,15 @@ const cerrarSesion = async () => {
 const selectedIndex = ref(0);
 
 const appPages = [
-  {
-    title: 'Ajustes',
-    url: '/folder/Favorites',
-    iosIcon: settings,
-    mdIcon: settings,
-  },
+  // {
+  //   title: 'Ajustes',
+  //   url: '/folder/Favorites',
+  //   iosIcon: settings,
+  //   mdIcon: settings,
+  // },
   {
     title: 'Acerca de',
-    url: '/folder/Archived',
+    url: '/folder/Informacion',
     iosIcon: document,
     mdIcon: document,
   },
@@ -110,6 +110,12 @@ const productosPage = [
     iosIcon: qrCode,
     mdIcon: qrCode,
   },
+  {
+    title: 'Mesero notificaciones',
+    url: '/notificaciones-mesero',
+    iosIcon: notifications,
+    mdIcon: notifications,
+  }
 ];
 
 const path = window.location.pathname.split('folder/')[1];

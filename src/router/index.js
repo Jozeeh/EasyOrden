@@ -8,6 +8,7 @@ import PedidosPrepararPage from '../views/productos-views/PedidosPrepararPage.vu
 import ProductosPage from '../views/categorias-views/ProductosPage.vue'
 import InicioSesionPage from '../views/usuarios/InicioSesionPage.vue'
 import RegistroPage from '../views/usuarios/RegistroPage.vue'
+import NotificacionesMeseroPage from '../views/generador-views/NotificacionesMeseroPage.vue'
 
 const routes = [
   {
@@ -17,6 +18,10 @@ const routes = [
   {
     path: '/generador-qr',
     component: GenerarQR
+  },
+  {
+    path: '/notificaciones-mesero',
+    component: NotificacionesMeseroPage
   },
   {
     path: '/inicio-sesion',
