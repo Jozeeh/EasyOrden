@@ -431,7 +431,7 @@ export default {
         eliminarProducto(idPlato) {
             this.alertaNoPuedeEliminar = false
             this.cargandoEliminacion = true
-            axios.delete(`http://${this.$store.state.ipLocal}/api/platos/delete/${idPlato}`)
+            axios.delete(`${this.ipLocal}/platos/delete/${idPlato}`)
                 .then(response => {
                     this.cargandoEliminacion = false
                     this.obtenerProductos();
