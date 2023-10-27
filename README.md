@@ -1,10 +1,9 @@
 # EasyOrden - Restaurantes
 
 Proyecto para la gestión de pedidos en un restaurante mediante codigo QR (Menú QR funcional).
+Este repositorio es unicamente para la gestión desde el restaurante, para clientes ve a https://github.com/Jozeeh/EasyOrden-Cliente.
 
 Al clonar el proyecto debes instalar las siguientes dependencias:
-
-
 
 ## Instalación del proyecto
 
