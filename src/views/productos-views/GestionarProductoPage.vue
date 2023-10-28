@@ -367,7 +367,6 @@ export default {
             this.cargandoAgregacion = true
             axios.post(`${this.ipLocal}/platos/store`, this.plato)
                 .then(response => {
-                    console.log(response);
                     this.cargandoAgregacion = false
                     this.modalAgregar = false;
                     this.plato = {nombrePlato: '', categoria: 'Comidas', precio: '', imagen: null},
