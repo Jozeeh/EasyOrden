@@ -105,6 +105,7 @@ export default {
                 dui: "",
                 telefono: "",
                 email: "",
+                tipoUser: "Empleado",
                 password: "",
             },
             //Alerta de registro
@@ -199,7 +200,6 @@ export default {
                 } else {
                     // Si se encuentra un token, obtiene los datos del usuario y redirige al inicio
                     this.obtenerDatosUsuario();
-                    this.$router.push('/inicio');
                 }
             })
             .catch(error => {

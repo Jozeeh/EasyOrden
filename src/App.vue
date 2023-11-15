@@ -64,6 +64,7 @@ const storage = new Storage();
 // Cerrar sesión con ionic/storage
 const cerrarSesion = async () => {
   await storage.remove('tokenInicioSesion');
+  await storage.remove('easyToken');
   store.state.datosUsuario = [];
   router.push('/inicio-sesion')
 };

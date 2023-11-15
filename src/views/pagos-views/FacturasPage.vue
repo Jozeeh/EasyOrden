@@ -158,7 +158,6 @@ export default {
                 if (!token) {
                     //Si no tenemos sesión iniciada
                     console.log('Inicia sesión o registrate!')
-                    this.$router.push('/inicio-sesion')
                 } else {
                     // Si se encuentra un token, obtiene los datos del usuario
                     this.obtenerDatosUsuario();

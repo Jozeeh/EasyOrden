@@ -10,57 +10,142 @@ import InicioSesionPage from '../views/usuarios/InicioSesionPage.vue'
 import RegistroPage from '../views/usuarios/RegistroPage.vue'
 import NotificacionesMeseroPage from '../views/generador-views/NotificacionesMeseroPage.vue'
 
+import { Storage } from '@ionic/storage';
+
 const routes = [
   {
     path: '',
     redirect: '/inicio-sesion'
   },
   {
-    path: '/generador-qr',
-    component: GenerarQR
-  },
-  {
-    path: '/notificaciones-mesero',
-    component: NotificacionesMeseroPage
-  },
-  {
     path: '/inicio-sesion',
-    component: InicioSesionPage
+    component: InicioSesionPage,
+    beforeEnter: async (to, from, next) => {
+      const acceso = await validarAcceso();
+      if (acceso) {
+        next('/inicio');
+      } else {
+        next();
+      }
+    }
   },
   {
     path: '/registrarse',
-    component: RegistroPage
+    component: RegistroPage,
+    beforeEnter: async (to, from, next) => {
+      const acceso = await validarAcceso();
+      if (acceso) {
+        next('/inicio');
+      } else {
+        next();
+      }
+    }
+  },
+  {
+    path: '/generador-qr',
+    component: GenerarQR,
+    beforeEnter: async (to, from, next) => {
+      const acceso = await validarAcceso();
+      if (acceso) {
+        next();
+      } else {
+        next('/inicio-sesion');
+      }
+    }
+  },
+  {
+    path: '/notificaciones-mesero',
+    component: NotificacionesMeseroPage,
+    beforeEnter: async (to, from, next) => {
+      const acceso = await validarAcceso();
+      if (acceso) {
+        next();
+      } else {
+        next('/inicio-sesion');
+      }
+    }
   },
   {
     path: '/inicio',
-    component: InicioPage
+    component: InicioPage,
+    beforeEnter: async (to, from, next) => {
+      const acceso = await validarAcceso();
+      if (acceso) {
+        next();
+      } else {
+        next('/inicio-sesion');
+      }
+    }
   },
   {
     path: '/productos',
-    component: ProductosPage
+    component: ProductosPage,
+    beforeEnter: async (to, from, next) => {
+      const acceso = await validarAcceso();
+      if (acceso) {
+        next();
+      } else {
+        next('/inicio-sesion');
+      }
+    }
   },
   {
     path: '/pagar',
-    component: PagoPage
+    component: PagoPage,
+    beforeEnter: async (to, from, next) => {
+      const acceso = await validarAcceso();
+      if (acceso) {
+        next();
+      } else {
+        next('/inicio-sesion');
+      }
+    }
   },
   {
     path: '/facturas',
-    component: FacturasPage
+    component: FacturasPage,
+    beforeEnter: async (to, from, next) => {
+      const acceso = await validarAcceso();
+      if (acceso) {
+        next();
+      } else {
+        next('/inicio-sesion');
+      }
+    }
   },
   {
     path: '/gestionar-producto',
-    component: GestionarProductoPage
+    component: GestionarProductoPage,
+    beforeEnter: async (to, from, next) => {
+      const acceso = await validarAcceso();
+      if (acceso) {
+        next();
+      } else {
+        next('/inicio-sesion');
+      }
+    }
   },
   {
     path: '/pedidos-preparar',
-    component: PedidosPrepararPage
-  },
-  
-  {
-    path: '/folder/:id',
-    component: () => import ('../views/FolderPage.vue')
+    component: PedidosPrepararPage,
+    beforeEnter: async (to, from, next) => {
+      const acceso = await validarAcceso();
+      if (acceso) {
+        next();
+      } else {
+        next('/inicio-sesion');
+      }
+    }
   }
 ]
+
+async function validarAcceso() {
+  const storage = new Storage();
+  await storage.create();
+  const usuario = await storage.get('tokenInicioSesion');
+  
+  return (usuario) ? true : false;
+}
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),

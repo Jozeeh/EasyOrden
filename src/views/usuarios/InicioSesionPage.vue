@@ -107,11 +107,9 @@ export default {
             };
             axios.post(`${this.ipLocal}/users`, userData)
                 .then(response => {
-                    // Manejar la respuesta exitosa aquí
-                    const datosUsuario = response.data.data; // Suponiendo que el token se devuelve en la respuesta
-
                     // Almacena el token en el almacenamiento local o en una cookie
-                    this.$storage.set('tokenInicioSesion', datosUsuario);
+                    this.$storage.set('tokenInicioSesion', response.data.data);
+                    this.$storage.set('easyToken', response.data.token);
                     // this.$store.dispatch('iniciarSesionAccion')
                     this.$store.state.datosUsuario = response.data.data
 
@@ -162,9 +160,8 @@ export default {
                     //Si no tenemos sesión iniciada
                     console.log('Inicia sesión o registate!')
                 } else {
-                    // Si se encuentra un token, obtiene los datos del usuario y redirige al inicio
+                    // Obtiene los datos del usuario y redirige al inicio
                     this.obtenerDatosUsuario();
-                    this.$router.push('/inicio');
                 }
             })
             .catch(error => {
