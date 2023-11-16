@@ -4,13 +4,27 @@
       <ion-menu side="end" content-id="main-content" type="overlay" :swipe-gesture="false">
         <ion-content>
           <ion-list id="inbox-list">
-            <ion-list-header>Productos</ion-list-header> <br>
-            <ion-menu-toggle :auto-hide="false" v-for="(p, i) in productosPage" :key="i">
-              <ion-item @click="setSelectedIndex(i + appPages.length)" router-direction="root" :router-link="p.url"
-                lines="none" :detail="false" class="hydrated"
-                :class="{ selected: selectedIndex === i + appPages.length }">
-                <ion-icon aria-hidden="true" slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
-                <ion-label>{{ p.title }}</ion-label>
+            <ion-list-header>Productos</ion-list-header>
+            <ion-menu-toggle :auto-hide="false">
+              <ion-item router-direction="root" lines="none" :detail="false" class="hydrated" :router-link="('/inicio')">
+                <ion-icon aria-hidden="true" slot="start" :ios="home" :md="home"></ion-icon>
+                <ion-label>Incio</ion-label>
+              </ion-item>
+              <ion-item v-if="store.state.datosUsuario.tipoUser == 'Admin'" router-direction="root" lines="none" :detail="false" class="hydrated" :router-link="('/gestionar-producto')">
+                <ion-icon aria-hidden="true" slot="start" :ios="addCircle" :md="addCircle"></ion-icon>
+                <ion-label>Gestionar producto</ion-label>
+              </ion-item>
+              <ion-item v-if="(store.state.datosUsuario.tipoUser == 'Admin' || store.state.datosUsuario.tipoUser == 'Empleado')" router-direction="root" lines="none" :detail="false" class="hydrated" :router-link="('/pedidos-preparar')">
+                <ion-icon aria-hidden="true" slot="start" :ios="restaurant" :md="restaurant"></ion-icon>
+                <ion-label>Pedidos preparar</ion-label>
+              </ion-item>
+              <ion-item v-if="(store.state.datosUsuario.tipoUser == 'Admin')" router-direction="root" lines="none" :detail="false" class="hydrated" :router-link="('/generador-qr')">
+                <ion-icon aria-hidden="true" slot="start" :ios="qrCode" :md="qrCode"></ion-icon>
+                <ion-label>Generador QR</ion-label>
+              </ion-item>
+              <ion-item v-if="(store.state.datosUsuario.tipoUser == 'Admin' || store.state.datosUsuario.tipoUser == 'Empleado')" router-direction="root" lines="none" :detail="false" class="hydrated" :router-link="('/notificaciones-mesero')">
+                <ion-icon aria-hidden="true" slot="start" :ios="notifications" :md="notifications"></ion-icon>
+                <ion-label>Mesero notificación</ion-label>
               </ion-item>
             </ion-menu-toggle>
           </ion-list>
@@ -61,11 +75,29 @@ const storage = new Storage();
   storage.create().then(storageInstance => {
 });
 
+const tipoUsuario = ref(null);
+
+// Obtenemos datos del storage
+async function verTipoUsuario() {
+  // Obtenemos el tipo de usuario
+  const data = await storage.get('tokenInicioSesion');
+  // tipoUsuario.value = data
+  tipoUsuario.value = { value: data };
+
+  console.log(tipoUsuario);
+}
+
+onMounted(() => {
+  // Llamar la función para obtener el usuario actual
+  verTipoUsuario();
+});
+
 // Cerrar sesión con ionic/storage
 const cerrarSesion = async () => {
   await storage.remove('tokenInicioSesion');
   await storage.remove('easyToken');
   store.state.datosUsuario = [];
+  tipoUsuario.value = { value: null };
   router.push('/inicio-sesion')
 };
 
