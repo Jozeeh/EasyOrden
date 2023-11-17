@@ -26,26 +26,19 @@
                 <ion-icon aria-hidden="true" slot="start" :ios="notifications" :md="notifications"></ion-icon>
                 <ion-label>Mesero notificación</ion-label>
               </ion-item>
+              <ion-item v-if="(store.state.datosUsuario.tipoUser == 'Admin')" router-direction="root" lines="none" :detail="false" class="hydrated" :router-link="('/gestionar-usuarios')">
+                <ion-icon aria-hidden="true" slot="start" :ios="person" :md="person"></ion-icon>
+                <ion-label>Gestionar usuarios</ion-label>
+              </ion-item>
             </ion-menu-toggle>
           </ion-list>
 
           <ion-list id="inbox-list">
             <ion-list-header>Cuenta</ion-list-header> <br>
-            <ion-menu-toggle :auto-hide="false" v-for="(p, i) in appPages" :key="i">
-              <ion-item @click="setSelectedIndex(i)" router-direction="root" :router-link="p.url" lines="none"
-                :detail="false" class="hydrated" :class="{ selected: selectedIndex === i }">
-                <ion-icon aria-hidden="true" slot="start" :ios="p.iosIcon" :md="p.mdIcon"></ion-icon>
-                <ion-label>{{ p.title }}</ion-label>
+              <ion-item router-direction="root" lines="none" :detail="false" class="hydrated" @click="cerrarSesion()">
+                <ion-icon aria-hidden="true" slot="start" :ios="notifications" :md="notifications"></ion-icon>
+                <ion-label>Cerrar sesión</ion-label>
               </ion-item>
-            </ion-menu-toggle>
-
-            <!-- CERRAR SESION -->
-            <ion-menu-toggle :auto-hide="false">
-              <ion-item @click="cerrarSesion">
-                <ion-icon aria-hidden="true" slot="start" :icon="logOut"></ion-icon>
-                <ion-label>Cerrar Sesión</ion-label>
-              </ion-item>
-            </ion-menu-toggle>
           </ion-list>
         </ion-content>
 
@@ -59,9 +52,9 @@
 import {
   IonApp, IonContent, IonIcon, IonItem, IonLabel, IonList, IonListHeader, IonMenu, IonMenuToggle, IonNote, IonRouterOutlet, IonSplitPane, IonModal, IonHeader, IonToolbar, IonButtons, IonButton, IonTitle, IonSelect, IonSelectOption, IonFooter, IonThumbnail
 } from '@ionic/vue';
-import { ref, onMounted, onUpdated } from 'vue';
+import { ref, onMounted } from 'vue';
 import {
-  home, person, personAdd, settings, document, addCircle, restaurant, logOut, qrCode, notifications
+  home, person, document, addCircle, restaurant, qrCode, notifications
 } from 'ionicons/icons';
 
 import store from '@/store';
@@ -98,7 +91,7 @@ const cerrarSesion = async () => {
   await storage.remove('easyToken');
   store.state.datosUsuario = [];
   tipoUsuario.value = { value: null };
-  router.push('/inicio-sesion')
+  router.go('/')
 };
 
 const selectedIndex = ref(0);

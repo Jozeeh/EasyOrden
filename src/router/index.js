@@ -9,6 +9,7 @@ import ProductosPage from '../views/categorias-views/ProductosPage.vue'
 import InicioSesionPage from '../views/usuarios/InicioSesionPage.vue'
 import RegistroPage from '../views/usuarios/RegistroPage.vue'
 import NotificacionesMeseroPage from '../views/generador-views/NotificacionesMeseroPage.vue'
+import GestionarUsuariosPage from '../views/gestionar-users-views/GestionarUsersPage.vue'
 
 import { Storage } from '@ionic/storage';
 
@@ -128,6 +129,18 @@ const routes = [
   {
     path: '/pedidos-preparar',
     component: PedidosPrepararPage,
+    beforeEnter: async (to, from, next) => {
+      const acceso = await validarAcceso();
+      if (acceso) {
+        next();
+      } else {
+        next('/inicio-sesion');
+      }
+    }
+  },
+  {
+    path: '/gestionar-usuarios',
+    component: GestionarUsuariosPage,
     beforeEnter: async (to, from, next) => {
       const acceso = await validarAcceso();
       if (acceso) {
