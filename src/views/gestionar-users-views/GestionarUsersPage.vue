@@ -108,9 +108,7 @@ import { IonButtons, IonContent, IonHeader, IonMenuButton, IonPage, IonTitle, Io
 
 import axios from 'axios';
 
-import { caretDownCircle } from 'ionicons/icons';
-
-import { cart, informationCircle, close } from 'ionicons/icons';
+import { cart, informationCircle, close, caretDownCircle } from 'ionicons/icons';
 
 export default {
     name: 'InicioPage',
@@ -143,7 +141,8 @@ export default {
                     this.eliminarUsuario(this.idUsuarioAEliminar)
                 }
             }],
-            idUsuarioAEliminar: ''
+            idUsuarioAEliminar: '',
+            config: {}
         }
     },
     methods: {
@@ -155,7 +154,7 @@ export default {
             this.siHayUsuarios = false;
 
             // Petición axios
-            axios.get(`${this.ipLocal}/usuarios/select/${this.tipoUsuario}`)
+            axios.get(`${this.ipLocal}/usuarios/select/${this.tipoUsuario}`, this.config)
             .then(respuesta => {
                 console.log('Respuesta:', respuesta);
                 this.btnRoles = false;
@@ -178,7 +177,7 @@ export default {
             // Petición axios
             axios.put(`${this.ipLocal}/usuarios/update/${idUsuario}`, {
                 tipoUser: 'Cliente'
-            })
+            }, this.config)
             .then(respuesta => {
                 console.log('Respuesta:', respuesta);
                 this.loadingUsuarios = false;
@@ -197,7 +196,7 @@ export default {
             // Petición axios
             axios.put(`${this.ipLocal}/usuarios/update/${idUsuario}`, {
                 tipoUser: 'Empleado'
-            })
+            }, this.config)
             .then(respuesta => {
                 console.log('Respuesta:', respuesta);
                 this.loadingUsuarios = false;
@@ -214,7 +213,7 @@ export default {
             this.loadingUsuarios = true;
 
             // Petición axios
-            axios.delete(`${this.ipLocal}/usuarios/delete/${idUsuario}`)
+            axios.delete(`${this.ipLocal}/usuarios/delete/${idUsuario}`, this.config)
             .then(respuesta => {
                 console.log('Respuesta:', respuesta);
                 this.loadingUsuarios = false;
@@ -251,6 +250,18 @@ export default {
             } catch (error) {
                 console.error('Error al recuperar datos del usuario:', error);
             }
+        },
+
+        // Obtenemos token
+        async getToken() {
+            let token = await this.$storage.get('easyToken')
+            this.config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+
+            this.listaUsuarios()
         }
     },
     beforeCreate(){
@@ -269,8 +280,8 @@ export default {
                 console.error('Error al verificar la sesión:', error);
             });
     },
-    created() {
-        this.listaUsuarios();
+    ionViewWillEnter() {
+        this.getToken()
     },
     watch: {
         //este metodo comprueba que la operacion sea diferente para volver hacer el calculo

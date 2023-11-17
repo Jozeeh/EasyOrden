@@ -27,7 +27,9 @@
                         <ion-card class="card-qr">
                             <ion-card-content>
                                 <ion-item>
-                                    <ion-input label-placement="floating" label="Restaurante" v-model="text1"></ion-input>
+                                    <ion-select class="selectModalStyle" label="Dominio de restaurante" label-placement="floating" v-model="text1">
+                                        <ion-select-option value="https://api2.query.lat/public/api">https://api2.query.lat/public/api</ion-select-option>
+                                    </ion-select>
                                 </ion-item>
 
                                 <ion-item>

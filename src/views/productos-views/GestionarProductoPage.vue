@@ -329,7 +329,8 @@ export default {
                 handler: () => {
                     this.eliminarProducto(this.idProductoAEliminar)
                 }
-            }]
+            }],
+            config: {}
         }
     },
     methods: {
@@ -340,7 +341,7 @@ export default {
         obtenerProductos() {
             this.botonCategoria = true
             this.cargandoProductos = true
-            axios.get(`${this.ipLocal}/platos/select/${this.categoria}`)
+            axios.get(`${this.ipLocal}/platos/select/${this.categoria}`, this.config)
                 .then(response => {
                     this.botonCategoria = false
                     this.cargandoProductos = false
@@ -365,7 +366,7 @@ export default {
         agregarProducto() {
             this.alertaNoPuedeAgregar = false
             this.cargandoAgregacion = true
-            axios.post(`${this.ipLocal}/platos/store`, this.plato)
+            axios.post(`${this.ipLocal}/platos/store`, this.plato, this.config)
                 .then(response => {
                     this.cargandoAgregacion = false
                     this.modalAgregar = false;
@@ -382,7 +383,7 @@ export default {
             this.modalEditar = true
             // this.btnCerrarEditar = true
             this.cargandoEditar = true
-            axios.get(`${this.ipLocal}/platos/find/${idPlato}`)
+            axios.get(`${this.ipLocal}/platos/find/${idPlato}`, this.config)
                 .then(response => {
                     this.editarPlato.idPlato = response.data.data.idPlato;
                     this.editarPlato.nombrePlato = response.data.data.nombrePlato;
@@ -401,13 +402,13 @@ export default {
         editarPlatoObtenido(id) {
             this.cargandoEditacion = true
             if (this.editarPlato.imagen) {
-                axios.put(`${this.ipLocal}/platos/update/${id}`, this.editarPlato)
+                axios.put(`${this.ipLocal}/platos/update/${id}`, this.editarPlato, this.config)
                     .then(response => {
                         console.log(response);
                         this.modalEditar = false;
                         this.cargandoEditacion = false;
                         // this.obtenerProductos()
-                        window.location.reload(); // Recargar la página
+                        this.obtenerProductos();
                     })
                     .catch(error => {
                         console.log(error);
@@ -416,13 +417,15 @@ export default {
                 // Si no hay imagen en editarPlato, crea un nuevo objeto sin la propiedad imagen
                 const { imagen, ...datosSinImagen } = this.editarPlato;
 
-                axios.put(`http://${this.$store.state.ipLocal}/api/platos/update/${id}`, datosSinImagen)
+                axios.put(`http://${this.$store.state.ipLocal}/api/platos/update/${id}`, datosSinImagen, this.config)
                     .then(response => {
                         console.log(response);
                         this.modalEditar = false;
-                        window.location.reload(); // Recargar la página
+                        this.obtenerProductos();
                     })
                     .catch(error => {
+                        this.modalEditar = false;
+                        this.obtenerProductos();
                         console.log(error);
                     });
             }
@@ -430,7 +433,7 @@ export default {
         eliminarProducto(idPlato) {
             this.alertaNoPuedeEliminar = false
             this.cargandoEliminacion = true
-            axios.delete(`${this.ipLocal}/platos/delete/${idPlato}`)
+            axios.delete(`${this.ipLocal}/platos/delete/${idPlato}`, this.config)
                 .then(response => {
                     this.cargandoEliminacion = false
                     this.obtenerProductos();
@@ -462,6 +465,17 @@ export default {
             } catch (error) {
                 console.error('Error al recuperar datos del usuario:', error);
             }
+        },
+        // Obtenemos token
+        async getToken() {
+            let token = await this.$storage.get('easyToken')
+            this.config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+
+            this.obtenerProductos()
         }
     },
     beforeCreate(){
@@ -480,11 +494,8 @@ export default {
                 console.error('Error al verificar la sesión:', error);
             });
     },
-    created() {
-        this.obtenerProductos();
-    },
-    mounted() {
-        
+    ionViewWillEnter() {
+        this.getToken()
     },
     watch: {
         categoria(nuevoValor, antiguoValor) {

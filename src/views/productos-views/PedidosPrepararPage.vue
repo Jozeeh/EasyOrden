@@ -103,13 +103,14 @@ export default {
             categoriaEstadoPedido: 'Ordenado',
             pedidos: {},
             pedidos2: {},
-            cargandoProductos: false
+            cargandoProductos: false,
+            config: {}
         }
     },
     methods: {
         obtenerPedidos() {
             this.cargandoProductos = true
-            axios.get(`${this.ipLocal}/pedidos/select`)
+            axios.get(`${this.ipLocal}/pedidos/select`, this.config)
                 .then(response => {
                     this.cargandoProductos = false
                     this.pedidos2 = response.data.data
@@ -122,7 +123,7 @@ export default {
         },
         // Obtenemos los pedidos que se han hecho con los detalles del plato
         obtenerPedidosCategoria() {
-            axios.get(`${this.ipLocal}/pedidos/select/${this.categoriaEstadoPedido}`)
+            axios.get(`${this.ipLocal}/pedidos/select/${this.categoriaEstadoPedido}`, this.config)
                 .then(response => {
                     this.pedidos = response.data.data
                     console.log(response.data.data);
@@ -145,7 +146,7 @@ export default {
                 estadoPedido: nuevoEstado
             };
 
-            axios.put(`${this.ipLocal}/pedidos/update/${idPedido}`, data)
+            axios.put(`${this.ipLocal}/pedidos/update/${idPedido}`, data, this.config)
                 .then(response => {
                     console.log(response.data.data);
                     this.obtenerPedidos()
@@ -175,6 +176,17 @@ export default {
             } catch (error) {
                 console.error('Error al recuperar datos del usuario:', error);
             }
+        },
+        // Obtenemos token
+        async getToken() {
+            let token = await this.$storage.get('easyToken')
+            this.config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+
+            this.obtenerPedidos()
         }
     },
     beforeCreate(){
@@ -193,18 +205,8 @@ export default {
                 console.error('Error al verificar la sesión:', error);
             });
     },
-    mounted() {
-        this.obtenerPedidos()
-        // this.obtenerPedidosCategoria()
-    },
-    watch: {
-        //este metodo comprueba que la operacion sea diferente para volver hacer el calculo
-        //debe ser mismo nombre de la variable donde esta en return
-        // categoriaEstadoPedido(nuevoValor, antiguoValor) {
-        //     if (nuevoValor != antiguoValor) {
-        //         this.obtenerPedidosCategoria()
-        //     }
-        // },
+    ionViewWillEnter() {
+        this.getToken()
     }
 }
 </script>

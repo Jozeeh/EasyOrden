@@ -167,7 +167,8 @@ export default {
             cargandoProductos: false,
             botonCategoria: false,
             cargandoAgregarProducto: false,
-            toastProductoAgregado: false
+            toastProductoAgregado: false,
+            config: {}
         }
     },
     methods: {
@@ -198,7 +199,7 @@ export default {
         obtenerPlatos() {
             this.botonCategoria = true
             this.cargandoProductos = true
-            axios.get(`${this.ipLocal}/platos/select/${this.categoria}`)
+            axios.get(`${this.ipLocal}/platos/select/${this.categoria}`, this.config)
                 .then(response => {
                     this.cargandoProductos = false
                     this.botonCategoria = false
@@ -233,7 +234,21 @@ export default {
             } catch (error) {
                 console.error('Error al recuperar datos del usuario:', error);
             }
+        },
+        // Obtenemos token
+        async getToken() {
+            let token = await this.$storage.get('easyToken')
+            this.config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+
+            this.obtenerPlatos()
         }
+    },
+    ionViewWillEnter() {
+        this.getToken()
     },
     beforeCreate(){
         //Verificar si ya tenemos una sesión iniciada
@@ -252,7 +267,7 @@ export default {
             });
     },
     created() {
-        this.obtenerPlatos()
+        
     },
     mounted() {
 

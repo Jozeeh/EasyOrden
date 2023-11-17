@@ -129,7 +129,8 @@ export default {
                 message: '',
                 buttons: []
             },
-            cargandoConfirmarCompra: false
+            cargandoConfirmarCompra: false,
+            config: {}
         }
     },
     methods: {
@@ -172,7 +173,7 @@ export default {
                 }))
             };
 
-            axios.post(`${this.ipLocal}/pedidos/store`, this.pedido)
+            axios.post(`${this.ipLocal}/pedidos/store`, this.pedido, this.config)
                 .then(response => {
                     this.cargandoConfirmarCompra = false
                     this.verAlertaCarrito(true, "Compra exitosa!");
@@ -209,6 +210,15 @@ export default {
             } catch (error) {
                 console.error('Error al recuperar datos del usuario:', error);
             }
+        },
+        // Obtenemos token
+        async getToken() {
+            let token = await this.$storage.get('easyToken')
+            this.config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
         }
     },
     beforeCreate(){
@@ -226,6 +236,9 @@ export default {
             .catch(error => {
                 console.error('Error al verificar la sesión:', error);
             });
+    },
+    ionViewWillEnter() {
+        this.getToken()
     },
     
 }

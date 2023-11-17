@@ -99,7 +99,8 @@ export default {
             cargandoNotificaciones: false,
             notificaciones: [],
             loadingNotificacion: false,
-            siHayNotificaciones: false
+            siHayNotificaciones: false,
+            config: {}
         }
     },
     methods: {
@@ -109,7 +110,7 @@ export default {
             this.noHayNotificaciones = false;
             this.cargandoNotificaciones = true;
 
-            axios.get(`${this.ipLocal}/mostrarMesero/Alerta`)
+            axios.get(`${this.ipLocal}/mostrarMesero/Alerta`, this.config)
                 .then(response => {
                     this.notificaciones = response.data.data;
                     this.cargandoNotificaciones = false;
@@ -125,7 +126,7 @@ export default {
         // Actualizar estado de notificacion
         actualizarNotificacion(idPedirMesero) {
             this.loadingNotificacion = true
-            axios.put(`${this.ipLocal}/pedirmesero/notificar/${idPedirMesero}`, { estado: 'En camino'})
+            axios.put(`${this.ipLocal}/pedirmesero/notificar/${idPedirMesero}`, { estado: 'En camino'}, this.config)
                 .then(response => {
                     this.loadingNotificacion = false;
                     this.obtenerNotificacionesMesero();
@@ -155,6 +156,17 @@ export default {
             } catch (error) {
                 console.error('Error al recuperar datos del usuario:', error);
             }
+        },
+        // Obtenemos token
+        async getToken() {
+            let token = await this.$storage.get('easyToken')
+            this.config = {
+                headers: {
+                    'Authorization': 'Bearer ' + token
+                }
+            }
+
+            this.obtenerNotificacionesMesero()
         }
     },
     beforeCreate(){
@@ -167,18 +179,14 @@ export default {
                 } else {
                     // Si se encuentra un token, obtiene los datos del usuario
                     this.obtenerDatosUsuario();
-                    this.obtenerNotificacionesMesero();
                 }
             })
             .catch(error => {
                 console.error('Error al verificar la sesión:', error);
             });
     },
-    created() {
-        
-    },
-    mounted() {
-
+    ionViewWillEnter() {
+        this.getToken()
     }
 }
 </script>
