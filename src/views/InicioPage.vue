@@ -20,6 +20,7 @@
                                 <ion-title>
                                     <p>Usuario: {{ this.$store.state.datosUsuario.name }}</p> 
                                     <p>Correo: {{ this.$store.state.datosUsuario.email }}</p>
+                                    <p>Rol: {{ this.$store.state.datosUsuario.tipoUser }}</p>
                                 </ion-title> 
                             </ion-card-content>
                         </ion-card>
@@ -38,7 +39,7 @@
                             <ion-card-content>
                                 Puedes comprar comidas aquí.
                                 <br>
-                                <ion-button color="warning" router-link="/productos">Productos</ion-button>
+                                <ion-button color="warning" router-link="/productos" v-if="this.$store.state.datosUsuario.tipoUser == 'Admin'">Productos</ion-button>
                             </ion-card-content>
                         </ion-card>
                     </ion-col>
@@ -56,7 +57,7 @@
                             <ion-card-content>
                                 Si necesitas la ayuda de un mesero haz click aquí!
                                 <br>
-                                <ion-button color="tertiary">Pedir mesero</ion-button>
+                                <ion-button color="tertiary" v-if="this.$store.state.datosUsuario.tipoUser == 'Admin'">Pedir mesero</ion-button>
                             </ion-card-content>
                         </ion-card>
                     </ion-col>
@@ -64,7 +65,7 @@
             </ion-grid>
         </ion-content>
 
-        <ion-footer class="footerPagar">
+        <ion-footer class="footerPagar" v-if="this.$store.state.datosUsuario.tipoUser == 'Admin'">
             <ion-toolbar router-link="/pagar">
                 <b>Productos:</b> {{ this.$store.getters.getCantidadCarrito }} <b>Total:</b> ${{
                     this.$store.getters.getTotalCarrito }} <br>

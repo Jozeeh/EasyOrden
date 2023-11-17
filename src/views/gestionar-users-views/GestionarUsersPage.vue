@@ -67,7 +67,7 @@
                                     <b>Rol:</b> {{ usuario.tipoUser }} <br>
                                     <ion-button v-if="usuario.tipoUser == 'Empleado'" color="warning" @click="descenderUsuario(usuario.id)">Descender</ion-button>
                                     <ion-button v-if="usuario.tipoUser == 'Cliente'" color="success" @click="ascenderUsuario(usuario.id)">Ascender</ion-button>
-                                    <ion-button color="danger">Eliminar</ion-button>
+                                    <ion-button color="danger" @click="verAlertaConfirmarEliminar(true, usuario.id)">Eliminar</ion-button>
                                 </div>
                             </ion-accordion>
                         </ion-accordion-group>
@@ -89,6 +89,15 @@
 
             <!-- ACTUALIZANDO ESTADO PEDIR MESERO -->
             <ion-loading :is-open="loadingUsuarios" trigger="open-loading" message="Actualizando rol!" style="--background: white; color: black;"></ion-loading>
+
+            <!-- ALERTA DE CONFIRMACIÓN AL ELIMINAR -->
+            <ion-alert style="--background: white; --ion-text-color: black;"
+                :is-open="alertaConfirmarEliminar" 
+                header="¿Seguro de eliminar este producto?"
+                message="No se podrá recuperar una vez eliminado"
+                :buttons="botonesAlertaEliminar"
+                @didDismiss="verAlertaConfirmarEliminar(false)">
+            </ion-alert>
         </ion-content>
     </ion-page>
 </template>
@@ -118,7 +127,23 @@ export default {
             tipoUsuario: 'Cliente',
             loadingUsuarios: false,
             siHayUsuarios: false,
-            btnRoles: false
+            btnRoles: false,
+            alertaConfirmarEliminar: false,
+            botonesAlertaEliminar: [{
+                text: 'Cancelar',
+                role: 'cancel',
+                handler: () => {
+                    console.log('Alert canceled');
+                }
+            },
+            {
+                text: 'Eliminar',
+                role: 'confirm',
+                handler: () => {
+                    this.eliminarUsuario(this.idUsuarioAEliminar)
+                }
+            }],
+            idUsuarioAEliminar: ''
         }
     },
     methods: {
@@ -182,6 +207,28 @@ export default {
                 console.error('Error:', error);
                 this.loadingUsuarios = false;
             });
+        },
+
+        // Eliminar usuario
+        eliminarUsuario(idUsuario){
+            this.loadingUsuarios = true;
+
+            // Petición axios
+            axios.delete(`${this.ipLocal}/usuarios/delete/${idUsuario}`)
+            .then(respuesta => {
+                console.log('Respuesta:', respuesta);
+                this.loadingUsuarios = false;
+                this.listaUsuarios();
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                this.loadingUsuarios = false;
+            });
+        },
+
+        verAlertaConfirmarEliminar(state, idUsuario) {
+            this.idUsuarioAEliminar = idUsuario;
+            this.alertaConfirmarEliminar = state;
         },
         
         // Obtenemos datos del usuario con Ionic/Storage
@@ -247,7 +294,12 @@ export default {
     background-repeat: no-repeat;
     background-size: cover;
 }
-
+.select-categoria {
+    --background: none;
+    background-color: #fefbd6;
+    color: black;
+    border-radius: 20px;
+}
 .fondo::before {
     content: "";
     position: absolute;
